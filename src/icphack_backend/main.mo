@@ -5,10 +5,16 @@ import Error "mo:base/Error";
 import User "user";
 
 actor {
-  type User = {
+  type UserType = {
+    #Customer;
+    #Worker;
+  };
+
+  public type User = {
     principal: Principal;
     name: Text;
     email: Text;
+    role: UserType;
   };
 
   stable var users = Map.new<Text, User>();
@@ -37,5 +43,36 @@ actor {
       case (?user) user;
       case null throw Error.reject("User not found");
     };
+  };
+
+  public func updateUser(input: User): async User {
+    let principalText = Principal.toText(input.principal);
+    let existing = switch (Map.get(users, Map.thash, principalText)) {
+      case (?user) user;
+      case null throw Error.reject("User not found");
+    };
+
+    let role = existing.role;
+    var name = existing.name;
+    var email = existing.email;
+
+    if (input.name != "") {
+      name := input.name;
+    };
+
+    if (input.email != "") {
+      email := input.email;
+    };
+
+    let newUser: User = {
+      principal = input.principal;
+      name = name;
+      email = email;
+      role = existing.role;
+    };
+
+    Map.set(users, Map.thash, principalText, newUser);
+
+    return newUser;
   }
 };
