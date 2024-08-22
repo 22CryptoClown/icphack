@@ -36,7 +36,7 @@ const Home = ({
       )}
       <div className='page-wrapper relative z-[1] bg-black text-white'>
         <Header
-          loginCSS='button hidden h-full rounded border-none bg-colorGreen py-3 text-base text-black after:border-none after:bg-white lg:inline-block'
+          loginCSS='button hidden h-full rounded border-none bg-colorGreen py-2 text-base text-black after:border-none after:bg-white lg:inline-block'
           navColor='is-text-white'
           light
           setShowModal={setShowModal}

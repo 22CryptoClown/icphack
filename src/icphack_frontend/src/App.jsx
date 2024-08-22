@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard';
 import Layout from './components/layout/Layout';
 import useJOSAnimation from './hooks/useJOSAnimation';
 import { icphack_backend } from 'declarations/icphack_backend';
+import useUserData from './hooks/useUserData';
 
 function App() {
   useJOSAnimation();
@@ -16,26 +17,24 @@ function App() {
     email: "",
     isWorker: false
   });
-  const [user, setUser] = useState({
-    data: [],
-    error: []
-  });
+  const { user, setUser } = useUserData();
+  console.log("🚀 ~ App ~ user:", user)
 
-  useEffect(() => {
-    const getId = async () => {
-     const authClient = await AuthClient.create();
-     const identity = authClient.getIdentity();
-     const principal = identity.getPrincipal();
+  // useEffect(() => {
+  //   const getId = async () => {
+  //    const authClient = await AuthClient.create();
+  //    const identity = authClient.getIdentity();
+  //    let principal = identity.getPrincipal() || localStorage.getItem('principal', JSON.stringify(principal));
  
-     const selfRes = await icphack_backend.self(principal);
+  //    const selfRes = await icphack_backend.self(principal);
      
-     if (selfRes?.error.length !== 0) {
-       setUser(selfRes);
-     }
-    }
+  //    if (selfRes?.error.length !== 0) {
+  //      setUser(selfRes);
+  //    }
+  //   }
  
-    getId();
-   }, []);
+  //   getId();
+  //  }, [user]);
 
   return (
     <>
@@ -68,7 +67,7 @@ function App() {
               />
             }
           />
-          <Route path='dashboard' element={<Dashboard />} />
+          <Route path='dashboard' element={<Dashboard user={user} />} />
         </Route>
       </Routes>
     </>

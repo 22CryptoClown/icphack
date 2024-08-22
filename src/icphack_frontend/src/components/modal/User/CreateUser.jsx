@@ -21,7 +21,7 @@ export const CreateUser = ({
       setLoading(true);
       const authClient = await AuthClient.create();
       const identity = authClient.getIdentity();
-      const principal = identity.getPrincipal();
+      let principal = identity.getPrincipal() || localStorage.getItem('principal', JSON.stringify(principal));
   
       const loginRes = await icphack_backend.login({
         principal: principal,
@@ -35,6 +35,7 @@ export const CreateUser = ({
       if (selfRes?.error.length === 0) {
         setUser(selfRes);
         navigate('/dashboard');
+        localStorage.setItem('principal', JSON.stringify(principal));
       }
     } catch (error) {
       console.error('Validation failed Create User:', error);

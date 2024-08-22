@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { UserOutlined } from '@ant-design/icons';
 import { Dropdown, Menu } from 'antd';
 import { AuthClient } from '@dfinity/auth-client';
@@ -19,6 +19,9 @@ const Header = ({
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isUserModalVisible, setIsUserModalVisible] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const isDashboard = location.pathname === '/dashboard';
 
   const actionLogin = function(authClient) {
     return new Promise((resolve, reject) => {
@@ -39,7 +42,8 @@ const Header = ({
           console.log("LoginRes:", loginRes);
       
           const identity = authClient.getIdentity();
-          const principal = identity.getPrincipal();
+          let principal = identity.getPrincipal() || localStorage.getItem('principal', JSON.stringify(principal));
+
   
           const selfRes = await icphack_backend.self(principal);
 
@@ -53,6 +57,7 @@ const Header = ({
             setUser(selfRes);
             navigate('/dashboard');
             setIsLoggedIn(true);
+            localStorage.setItem('principal', JSON.stringify(principal));
           } else {
             setShowModal(true);
             setActionClick("create-user");
@@ -70,6 +75,7 @@ const Header = ({
     setIsLoggedIn(false);
     setUser({ data: [], error: [] });
     navigate('/');
+    localStorage.removeItem('principal', JSON.stringify(principal));
   }
 
   const handleUserProfileClick = () => {
@@ -111,12 +117,13 @@ const Header = ({
     
     if (isLoggedIn) {
       const identity = authClient.getIdentity();
-      const principal = identity.getPrincipal();
+      let principal = identity.getPrincipal() || localStorage.getItem('principal', JSON.stringify(principal));
 
       const selfRes = await icphack_backend.self(principal);
       
       if (selfRes?.error.length !== 0) {
         setUser(selfRes);
+        localStorage.setItem('principal', JSON.stringify(principal));
       }
     }
    }
@@ -126,7 +133,7 @@ const Header = ({
 
   return (
     <header
-      className='site-header site-header--absolute is--white py-3'
+      className={`site-header site-header--absolute is--white py-3 ${(isLoggedIn && isDashboard) && 'bg-[#000000]'}`}
       id='sticky-menu'
     >
       <div className='global-container'>
