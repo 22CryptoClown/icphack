@@ -43,7 +43,7 @@ const DetailUser = ({ visible, onClose, user, onUpdate }) => {
 
   return (
     <Modal
-      visible={visible}
+      open={visible}
       title="User Profile"
       onCancel={onClose}
       footer={[
