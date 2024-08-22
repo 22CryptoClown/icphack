@@ -18,19 +18,48 @@ const Header = ({
 }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isUserModalVisible, setIsUserModalVisible] = useState(false);
+  const [identityProviderUrl, setIdentityProviderUrl] = useState('');
+
   const navigate = useNavigate();
   const location = useLocation();
 
   const isDashboard = location.pathname.includes("dashboard");
 
+  useEffect(() => {
+    const getIdentityProviderUrl = () => {
+      const iiCanisterId = process.env.CANISTER_ID_INTERNET_IDENTITY;
+      const dfxNetwork = process.env.DFX_NETWORK;
+      
+      if (!iiCanisterId) {
+        console.error('II_CANISTER_ID environment variable is not set');
+        return '';
+      }
+
+      switch (dfxNetwork) {
+        case 'local':
+          return `http://${iiCanisterId}.localhost:4943/`
+        case 'ic':
+          return `https://${iiCanisterId}.ic0.app`;
+        default:
+          return `https://${iiCanisterId}.dfinity.network`;
+      }
+    };
+
+    setIdentityProviderUrl(getIdentityProviderUrl());
+  }, []);
+
   const actionLogin = function(authClient) {
     return new Promise((resolve, reject) => {
+      if (!identityProviderUrl) {
+        reject(new Error('Identity provider URL is not set'));
+        return;
+      }
       authClient.login({
-        identityProvider: "http://a4tbr-q4aaa-aaaaa-qaafq-cai.localhost:4943/",
+        identityProvider: identityProviderUrl,
         onSuccess: resolve,
         onError: reject
-      })
-    })
+      });
+    });
   }
   
   async function login() {
