@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { UserOutlined } from '@ant-design/icons';
+import { HomeOutlined, UserOutlined } from '@ant-design/icons';
 import { Dropdown, Menu } from 'antd';
 import { AuthClient } from '@dfinity/auth-client';
 import { icphack_backend } from 'declarations/icphack_backend';
@@ -21,7 +21,7 @@ const Header = ({
   const navigate = useNavigate();
   const location = useLocation();
 
-  const isDashboard = location.pathname === '/dashboard';
+  const isDashboard = location.pathname.includes("dashboard");
 
   const actionLogin = function(authClient) {
     return new Promise((resolve, reject) => {
@@ -105,6 +105,7 @@ const Header = ({
   const userMenu = (
     <Menu>
       <Menu.Item key="profile" onClick={handleUserProfileClick}>User Profile</Menu.Item>
+      <Menu.Item key="dashboard" onClick={() => navigate('/dashboard')}>Dashboard</Menu.Item>
       <Menu.Item key="logout" onClick={logout}>Logout</Menu.Item>
     </Menu>
   )
@@ -142,7 +143,7 @@ const Header = ({
           <div></div>
           <div className='flex items-center gap-6'>
             {(isLoggedIn && (user.error?.length === 0 && user.data?.length !== 0)) ? (
-               <Dropdown overlay={userMenu} trigger={['click']}>
+              <Dropdown overlay={userMenu} trigger={['click']}>
                 <UserOutlined
                   style={{
                     fontSize: "24px",

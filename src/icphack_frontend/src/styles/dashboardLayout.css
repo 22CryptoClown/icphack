@@ -21,3 +21,12 @@
 .ant-menu-dark .ant-menu-submenu-title:hover {
   color: #39FF14;
 }
+
+.ant-layout-sider-trigger {
+  background-color: #39FF14 !important;
+  color: #000000 !important;
+}
+
+.ant-layout-sider-trigger:hover {
+  background-color: #32CD32 !important;
+}

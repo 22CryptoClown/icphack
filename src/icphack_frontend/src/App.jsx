@@ -1,11 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { AuthClient } from '@dfinity/auth-client';
+import { useState } from 'react';
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import Layout from './components/layout/Layout';
 import useJOSAnimation from './hooks/useJOSAnimation';
-import { icphack_backend } from 'declarations/icphack_backend';
 import useUserData from './hooks/useUserData';
 
 function App() {
@@ -18,23 +16,6 @@ function App() {
     isWorker: false
   });
   const { user, setUser } = useUserData();
-  console.log("🚀 ~ App ~ user:", user)
-
-  // useEffect(() => {
-  //   const getId = async () => {
-  //    const authClient = await AuthClient.create();
-  //    const identity = authClient.getIdentity();
-  //    let principal = identity.getPrincipal() || localStorage.getItem('principal', JSON.stringify(principal));
- 
-  //    const selfRes = await icphack_backend.self(principal);
-     
-  //    if (selfRes?.error.length !== 0) {
-  //      setUser(selfRes);
-  //    }
-  //   }
- 
-  //   getId();
-  //  }, [user]);
 
   return (
     <>
@@ -67,7 +48,9 @@ function App() {
               />
             }
           />
-          <Route path='dashboard' element={<Dashboard user={user} />} />
+          <Route path='dashboard' element={<Dashboard user={user} />}>
+            <Route path="create-projects" element={<Dashboard user={user} showCreateProject={true} />} />
+          </Route>
         </Route>
       </Routes>
     </>
