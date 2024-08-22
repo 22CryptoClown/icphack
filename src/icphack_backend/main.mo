@@ -4,6 +4,7 @@ import Text "mo:base/Text";
 import Nat64 "mo:base/Nat64";
 import Blob "mo:base/Blob";
 import Iter "mo:base/Iter";
+import Bool "mo:base/Bool";
 import UUID "mo:uuid/UUID";
 import SourceV4 "mo:uuid/async/SourceV4";
 import User "user";
@@ -21,16 +22,11 @@ actor {
     workerID: Principal;
   };
 
-  type UserType = {
-    #Customer;
-    #Worker;
-  };
-
   public type User = {
     principal: Principal;
     name: Text;
     email: Text;
-    role: UserType;
+    isWorker: Bool;
   };
 
   stable var users = Map.new<Text, User>();
@@ -71,7 +67,7 @@ actor {
       case null return {data = null; error = ?{message = "User not found"}};
     };
 
-    let role = existing.role;
+    let isWorker = existing.isWorker;
     var name = existing.name;
     var email = existing.email;
 
@@ -87,7 +83,7 @@ actor {
       principal = input.principal;
       name = name;
       email = email;
-      role = role;
+      isWorker = isWorker;
     };
 
     Map.set(users, Map.thash, principalText, newUser);
@@ -102,7 +98,7 @@ actor {
       case null return {data = null; error = ?{message = "Worker ID either invalid or not found"}};
     };
 
-    if (worker.role != #Worker) {
+    if (worker.isWorker == false) {
       return {data = null; error = ?{message = "Worker ID either invalid or not found"}}
     };
 
@@ -112,7 +108,7 @@ actor {
       case null return {data = null; error = ?{message = "Customer ID either invalid or not found"}};
     };
 
-    if (customer.role != #Customer) {
+    if (customer.isWorker) {
       return {data = null; error = ?{message = "Customer ID either invalid or not found"}}
     };
 
@@ -138,6 +134,7 @@ actor {
       supportingDocuments = input.supportingDocuments;
       customerID = input.customerID;
       workerID = input.workerID;
+      signedAt = null;
     };
 
     Map.set(workerProjects, Map.thash, idText, project);
@@ -156,9 +153,9 @@ actor {
       case null return {data = null; error = ?{message = "User ID either invalid or not found"}};
     };
 
-    let mapToSearch = switch(user.role) {
-      case (#Customer) customerProjectsMap;
-      case (#Worker) workerProjectsMap;
+    let mapToSearch = switch(user.isWorker) {
+      case (true) workerProjectsMap;
+      case (false) customerProjectsMap;
     };
 
     let projectsMap = switch (Map.get(mapToSearch, Map.thash, principalText)) {
@@ -170,5 +167,5 @@ actor {
     let projectsArr = Iter.toArray(projectsIter);
 
     return {data = ?projectsArr; error = null};
-  }
+  };
 };
