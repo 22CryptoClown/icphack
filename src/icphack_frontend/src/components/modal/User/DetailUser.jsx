@@ -1,6 +1,6 @@
-// src/components/modal/DetailUser.js
 import React, { useEffect, useState } from 'react';
-import { Modal, Form, Input, Button } from 'antd';
+import { Modal, Form, Input, Button, message, Tooltip } from 'antd';
+import { CopyOutlined } from '@ant-design/icons';
 import { AuthClient } from '@dfinity/auth-client';
 
 const DetailUser = ({ visible, onClose, user, onUpdate }) => {
@@ -26,10 +26,20 @@ const DetailUser = ({ visible, onClose, user, onUpdate }) => {
       const authClient = await AuthClient.create();
       const identity = authClient.getIdentity();
       const principal = identity.getPrincipal();
-      setUserPrincipal(principal);
+      setUserPrincipal(principal.toString());
     }
     getId();
-  }, [])
+  }, []);
+
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(userPrincipal);
+      message.success('Principal copied to clipboard');
+    } catch (err) {
+      console.error('Failed to copy: ', err);
+      message.error('Failed to copy principal');
+    }
+  };
 
   return (
     <Modal
@@ -40,7 +50,7 @@ const DetailUser = ({ visible, onClose, user, onUpdate }) => {
         <Button key="cancel" onClick={onClose}>
           Cancel
         </Button>,
-        <Button key="submit" type="primary" loading={loading} onClick={handleOk}>
+        <Button key="submit" style={{ background: '#000000', color: '#39FF14' }} loading={loading} onClick={handleOk}>
           Update
         </Button>,
       ]}
@@ -71,7 +81,15 @@ const DetailUser = ({ visible, onClose, user, onUpdate }) => {
           <Input />
         </Form.Item>
         <Form.Item label="Principal" style={{ marginBottom: 0 }}>
-          <Input value={userPrincipal} disabled />
+          <Input 
+            value={userPrincipal} 
+            disabled 
+            addonAfter={
+              <Tooltip title="Copy to clipboard">
+                <CopyOutlined onClick={copyToClipboard} style={{ cursor: 'pointer' }} />
+              </Tooltip>
+            }
+          />
         </Form.Item>
       </Form>
     </Modal>

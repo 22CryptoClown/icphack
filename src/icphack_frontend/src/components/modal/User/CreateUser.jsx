@@ -66,7 +66,7 @@ export const CreateUser = ({
         <Button key="cancel" onClick={handleCancel}>
           Cancel
         </Button>,
-        <Button key="submit" type="primary" loading={loading} onClick={handleOk}>
+        <Button key="submit" style={{ background: '#000000', color: '#39FF14' }} loading={loading} onClick={handleOk}>
           Create
         </Button>,
       ]}
