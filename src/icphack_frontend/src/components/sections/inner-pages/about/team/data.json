@@ -1,0 +1,56 @@
+[
+  {
+    "img": "assets/img/th-1/team-member-img-1.jpg",
+    "name": "Mr. Abraham Maslo",
+    "info": "Chief AI Officer",
+    "facebook": "http://www.facebook.com",
+    "twitter": "http://www.twitter.com",
+    "linkedin": "http://www.linkedin.com",
+    "instagram": "http://www.instagram.com"
+  },
+  {
+    "img": "assets/img/th-1/team-member-img-2.jpg",
+    "name": "Willium Robert",
+    "info": "Data Engineer",
+    "facebook": "http://www.facebook.com",
+    "twitter": "http://www.twitter.com",
+    "linkedin": "http://www.linkedin.com",
+    "instagram": "http://www.instagram.com"
+  },
+  {
+    "img": "assets/img/th-1/team-member-img-3.jpg",
+    "name": "Henry Fayol",
+    "info": "Research Scientist",
+    "facebook": "http://www.facebook.com",
+    "twitter": "http://www.twitter.com",
+    "linkedin": "http://www.linkedin.com",
+    "instagram": "http://www.instagram.com"
+  },
+  {
+    "img": "assets/img/th-1/team-member-img-4.jpg",
+    "name": "Henry Martine",
+    "info": "AI Researchers",
+    "facebook": "http://www.facebook.com",
+    "twitter": "http://www.twitter.com",
+    "linkedin": "http://www.linkedin.com",
+    "instagram": "http://www.instagram.com"
+  },
+  {
+    "img": "assets/img/th-1/team-member-img-5.jpg",
+    "name": "Jack Fox",
+    "info": "NLP Expert",
+    "facebook": "http://www.facebook.com",
+    "twitter": "http://www.twitter.com",
+    "linkedin": "http://www.linkedin.com",
+    "instagram": "http://www.instagram.com"
+  },
+  {
+    "img": "assets/img/th-1/team-member-img-6.jpg",
+    "name": "Adam Smith",
+    "info": "Project Manager",
+    "facebook": "http://www.facebook.com",
+    "twitter": "http://www.twitter.com",
+    "linkedin": "http://www.linkedin.com",
+    "instagram": "http://www.instagram.com"
+  }
+]

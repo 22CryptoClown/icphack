@@ -1,30 +1,16 @@
-import { useState } from 'react';
-import { icphack_backend } from 'declarations/icphack_backend';
+import { Route, Routes } from 'react-router-dom';
+import Home from './pages/home/Home';
+import useJOSAnimation from './hooks/useJOSAnimation';
 
 function App() {
-  const [greeting, setGreeting] = useState('');
-
-  function handleSubmit(event) {
-    event.preventDefault();
-    const name = event.target.elements.name.value;
-    icphack_backend.greet(name).then((greeting) => {
-      setGreeting(greeting);
-    });
-    return false;
-  }
+  useJOSAnimation();
 
   return (
-    <main>
-      <img src="/logo2.svg" alt="DFINITY logo" />
-      <br />
-      <br />
-      <form action="#" onSubmit={handleSubmit}>
-        <label htmlFor="name">Enter your name: &nbsp;</label>
-        <input id="name" alt="Name" type="text" />
-        <button type="submit">Click Me!</button>
-      </form>
-      <section id="greeting">{greeting}</section>
-    </main>
+    <>
+      <Routes>
+        <Route path='/' element={<Home />} />
+      </Routes>
+    </>
   );
 }
 
