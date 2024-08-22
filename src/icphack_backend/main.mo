@@ -3,7 +3,6 @@ import Principal "mo:base/Principal";
 import Text "mo:base/Text";
 import Nat64 "mo:base/Nat64";
 import Blob "mo:base/Blob";
-import Debug "mo:base/Debug";
 import UUID "mo:uuid/UUID";
 import SourceV4 "mo:uuid/async/SourceV4";
 import User "user";
@@ -45,10 +44,18 @@ actor {
       case null return {data = null; error = ?{message = "Worker ID either invalid or not found"}};
     };
 
+    if (worker.role != #Worker) {
+      return {data = null; error = ?{message = "Worker ID either invalid or not found"}}
+    };
+
     let customerID = Principal.toText(input.customerID);
     let customer = switch (Map.get(users, Map.thash, customerID)) {
       case (?user) user;
       case null return {data = null; error = ?{message = "Customer ID either invalid or not found"}};
+    };
+
+    if (customer.role != #Customer) {
+      return {data = null; error = ?{message = "Customer ID either invalid or not found"}}
     };
 
     let workerProjects = switch (Map.get(workerProjectsMap, Map.thash, workerID)) {
