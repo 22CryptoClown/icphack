@@ -1,24 +1,38 @@
 import Map "mo:map/Map";
 import Principal "mo:base/Principal";
 import Text "mo:base/Text";
-import Error "mo:base/Error";
+import Nat64 "mo:base/Nat64";
+import Blob "mo:base/Blob";
+import Iter "mo:base/Iter";
+import Bool "mo:base/Bool";
+import UUID "mo:uuid/UUID";
+import SourceV4 "mo:uuid/async/SourceV4";
 import User "user";
 import response "response";
 
 actor {
-  type UserType = {
-    #Customer;
-    #Worker;
+  type Project = {
+    id: UUID.UUID;
+    name: Text;
+    description: Text;
+    agreedFee: Nat64;
+    requiredDocuments: [Blob];
+    supportingDocuments: [Blob];
+    customerID: Principal;
+    workerID: Principal;
   };
 
   public type User = {
     principal: Principal;
     name: Text;
     email: Text;
-    role: UserType;
+    isWorker: Bool;
   };
 
   stable var users = Map.new<Text, User>();
+
+  stable var workerProjectsMap = Map.new<Text, Map.Map<Text, Project>>();
+  stable var customerProjectsMap = Map.new<Text, Map.Map<Text, Project>>();
 
   public query func greet(name : Text) : async Text {
     return "Hello, " # name # "!";
@@ -53,7 +67,7 @@ actor {
       case null return {data = null; error = ?{message = "User not found"}};
     };
 
-    let role = existing.role;
+    let isWorker = existing.isWorker;
     var name = existing.name;
     var email = existing.email;
 
@@ -69,11 +83,89 @@ actor {
       principal = input.principal;
       name = name;
       email = email;
-      role = role;
+      isWorker = isWorker;
     };
 
     Map.set(users, Map.thash, principalText, newUser);
 
     return {data = ?newUser; error = null};
-  }
+  };
+
+  public func createProject(input: Project): async response.Response<Project> {
+    let workerID = Principal.toText(input.workerID);
+    let worker = switch (Map.get(users, Map.thash, workerID)) {
+      case (?user) user;
+      case null return {data = null; error = ?{message = "Worker ID either invalid or not found"}};
+    };
+
+    if (worker.isWorker == false) {
+      return {data = null; error = ?{message = "Worker ID either invalid or not found"}}
+    };
+
+    let customerID = Principal.toText(input.customerID);
+    let customer = switch (Map.get(users, Map.thash, customerID)) {
+      case (?user) user;
+      case null return {data = null; error = ?{message = "Customer ID either invalid or not found"}};
+    };
+
+    if (customer.isWorker) {
+      return {data = null; error = ?{message = "Customer ID either invalid or not found"}}
+    };
+
+    let workerProjects = switch (Map.get(workerProjectsMap, Map.thash, workerID)) {
+      case (?projects) projects;
+      case null Map.new<Text, Project>();
+    };
+    let customerProjects = switch (Map.get(customerProjectsMap, Map.thash, customerID)) {
+      case (?projects) projects;
+      case null Map.new<Text, Project>();
+    };
+
+    let src = SourceV4.Source();
+    let id = await src.new();
+    let idText = UUID.toText(id);
+
+    let project: Project = {
+      id = id;
+      name = input.name;
+      description = input.description;
+      agreedFee = input.agreedFee;
+      requiredDocuments = input.requiredDocuments;
+      supportingDocuments = input.supportingDocuments;
+      customerID = input.customerID;
+      workerID = input.workerID;
+      signedAt = null;
+    };
+
+    Map.set(workerProjects, Map.thash, idText, project);
+    Map.set(customerProjects, Map.thash, idText, project);
+
+    Map.set(workerProjectsMap, Map.thash, workerID, workerProjects);
+    Map.set(customerProjectsMap, Map.thash, customerID, customerProjects);
+
+    return {data = ?project; error = null};
+  };
+
+  public query func listProjects(principal: Principal): async response.Response<[Project]> {
+    let principalText = Principal.toText(principal);
+    let user: User = switch (Map.get(users, Map.thash, principalText)) {
+      case (?user) user;
+      case null return {data = null; error = ?{message = "User ID either invalid or not found"}};
+    };
+
+    let mapToSearch = switch(user.isWorker) {
+      case (true) workerProjectsMap;
+      case (false) customerProjectsMap;
+    };
+
+    let projectsMap = switch (Map.get(mapToSearch, Map.thash, principalText)) {
+      case (?projects) projects;
+      case null return {data = null; error = null};
+    };
+
+    let projectsIter = Map.vals(projectsMap);
+    let projectsArr = Iter.toArray(projectsIter);
+
+    return {data = ?projectsArr; error = null};
+  };
 };
