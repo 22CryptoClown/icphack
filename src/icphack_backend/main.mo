@@ -3,6 +3,7 @@ import Principal "mo:base/Principal";
 import Text "mo:base/Text";
 import Error "mo:base/Error";
 import User "user";
+import response "response";
 
 actor {
   type UserType = {
@@ -23,33 +24,33 @@ actor {
     return "Hello, " # name # "!";
   };
 
-  public func login(newUser: User): async User {
+  public func login(newUser: User): async response.Response<User> {
     let principalText = Principal.toText(newUser.principal);
     if (Map.has(users, Map.thash, principalText)) {
       return switch (Map.get(users, Map.thash, principalText)) {
-        case (?user) user;
-        case null throw Error.reject("User not found");
+        case (?user) return {data = ?user; error = null};
+        case null return {data = null; error = ?{message = "User not found"}};
       };
     };
 
     Map.set(users, Map.thash, principalText, newUser);
 
-    return newUser;
+    return {data = ?newUser; error = null};
   };
 
-  public query func self(principal: Principal): async User {
+  public query func self(principal: Principal): async response.Response<User> {
     let principalText = Principal.toText(principal);
     return switch (Map.get(users, Map.thash, principalText)) {
-      case (?user) user;
-      case null throw Error.reject("User not found");
+      case (?user) return {data = ?user; error = null};
+      case null return {data = null; error = ?{message = "User not found"}};
     };
   };
 
-  public func updateUser(input: User): async User {
+  public func updateUser(input: User): async response.Response<User> {
     let principalText = Principal.toText(input.principal);
     let existing = switch (Map.get(users, Map.thash, principalText)) {
       case (?user) user;
-      case null throw Error.reject("User not found");
+      case null return {data = null; error = ?{message = "User not found"}};
     };
 
     let role = existing.role;
@@ -68,11 +69,11 @@ actor {
       principal = input.principal;
       name = name;
       email = email;
-      role = existing.role;
+      role = role;
     };
 
     Map.set(users, Map.thash, principalText, newUser);
 
-    return newUser;
+    return {data = ?newUser; error = null};
   }
 };
