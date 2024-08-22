@@ -5,6 +5,8 @@ import Nat64 "mo:base/Nat64";
 import Blob "mo:base/Blob";
 import Iter "mo:base/Iter";
 import Bool "mo:base/Bool";
+import Time "mo:base/Time";
+import Debug "mo:base/Debug";
 import UUID "mo:uuid/UUID";
 import SourceV4 "mo:uuid/async/SourceV4";
 import User "user";
@@ -20,6 +22,7 @@ actor {
     supportingDocuments: [Blob];
     customerID: Principal;
     workerID: Principal;
+    signedAt: ?Time.Time;
   };
 
   public type User = {
@@ -143,6 +146,8 @@ actor {
     Map.set(workerProjectsMap, Map.thash, workerID, workerProjects);
     Map.set(customerProjectsMap, Map.thash, customerID, customerProjects);
 
+    Debug.print(debug_show(idText));
+
     return {data = ?project; error = null};
   };
 
@@ -167,5 +172,58 @@ actor {
     let projectsArr = Iter.toArray(projectsIter);
 
     return {data = ?projectsArr; error = null};
+  };
+
+  public func signProject(principal: Principal, projectID: Text): async response.Response<Project> {
+    let principalText = Principal.toText(principal);
+    let user: User = switch (Map.get(users, Map.thash, principalText)) {
+      case (?user) user;
+      case null return {data = null; error = ?{message = "User ID either invalid or not found"}};
+    };
+
+    if (user.isWorker) {
+      return {data = null; error = ?{message = "Worker cannot sign contract"}};
+    };
+
+    let mapToSearch = switch(user.isWorker) {
+      case (true) workerProjectsMap;
+      case (false) customerProjectsMap;
+    };
+
+    let projectsMap = switch (Map.get(mapToSearch, Map.thash, principalText)) {
+      case (?projects) projects;
+      case null return {data = null; error = ?{message = "This user has no projects"}};
+    };
+
+    let existingProject = switch (Map.get(projectsMap, Map.thash, projectID)) {
+      case (?project) project;
+      case null return {data = null; error = ?{message = "Contract ID either invalid or not found"}}
+    };
+
+    if (existingProject.signedAt != null) {
+      return {data = null; error = ?{message = "Contract already signed"}};
+    };
+
+    let newProject = {
+      id = existingProject.id;
+      name = existingProject.name;
+      description = existingProject.description;
+      agreedFee = existingProject.agreedFee;
+      requiredDocuments = existingProject.requiredDocuments;
+      supportingDocuments = existingProject.supportingDocuments;
+      customerID = existingProject.customerID;
+      workerID = existingProject.workerID;
+      signedAt = ?Time.now();
+    };
+
+    Map.set(projectsMap, Map.thash, projectID, newProject);
+
+    if (user.isWorker) {
+      Map.set(workerProjectsMap, Map.thash, principalText, projectsMap);
+    } else {
+      Map.set(customerProjectsMap, Map.thash, principalText, projectsMap);
+    };
+
+    return {data = ?newProject; error = null};
   };
 };
