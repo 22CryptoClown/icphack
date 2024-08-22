@@ -1,15 +1,24 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import Navbar from '../navbar/Navbar';
-import Logo from '../logo/Logo';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { UserOutlined } from '@ant-design/icons';
+import { Dropdown, Menu } from 'antd';
 import { AuthClient } from '@dfinity/auth-client';
 import { icphack_backend } from 'declarations/icphack_backend';
+import Logo from '../logo/Logo';
+import DetailUser from '../modal/User/DetailUser';
 
-// eslint-disable-next-line react/prop-types
-const Header = ({ loginCSS, light, setShowModal, setActionClick }) => {
-  const [mobileMenu, setMobileMenu] = useState(false);
+const Header = ({
+  loginCSS,
+  light,
+  setShowModal,
+  setActionClick,
+  inputUser,
+  user,
+  setUser
+}) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState({});
+  const [isUserModalVisible, setIsUserModalVisible] = useState(false);
+  const navigate = useNavigate();
 
   const actionLogin = function(authClient) {
     return new Promise((resolve, reject) => {
@@ -34,8 +43,16 @@ const Header = ({ loginCSS, light, setShowModal, setActionClick }) => {
   
           const selfRes = await icphack_backend.self(principal);
 
-          if (!selfRes?.error) {
-            await icphack_backend.login(principal);
+          if (selfRes?.data.length === 1 && selfRes?.error.length === 0) {
+            await icphack_backend.login({
+              principal,
+              name: inputUser.name,
+              isWorker: inputUser.isWorker,
+              email: inputUser.email,
+            });
+            setUser(selfRes);
+            navigate('/dashboard');
+            setIsLoggedIn(true);
           } else {
             setShowModal(true);
             setActionClick("create-user");
@@ -49,8 +66,42 @@ const Header = ({ loginCSS, light, setShowModal, setActionClick }) => {
 
   const logout = async () => {
     const authClient = await AuthClient.create();
-    authClient.logout();
+    await authClient.logout();
+    setIsLoggedIn(false);
+    setUser({ data: [], error: [] });
+    navigate('/');
   }
+
+  const handleUserProfileClick = () => {
+    setIsUserModalVisible(true);
+  };
+
+  const handleUserModalClose = () => {
+    setIsUserModalVisible(false);
+  };
+
+  const handleUserUpdate = async (updatedUser) => {
+    try {
+      const authClient = await AuthClient.create();
+      const identity = authClient.getIdentity();
+      const principal = identity.getPrincipal();
+
+      const updateUser = await icphack_backend.updateUser({
+        principal: principal,
+        isWorker: user.data[0]?.isWorker,
+        ...updatedUser
+      })
+    } catch (error) {
+      console.error('Failed to update user:', error);
+    }
+  };
+
+  const userMenu = (
+    <Menu>
+      <Menu.Item key="profile" onClick={handleUserProfileClick}>User Profile</Menu.Item>
+      <Menu.Item key="logout" onClick={logout}>Logout</Menu.Item>
+    </Menu>
+  )
 
   useEffect(() => {
    const getId = async () => {
@@ -58,15 +109,15 @@ const Header = ({ loginCSS, light, setShowModal, setActionClick }) => {
     const isLoggedIn = await authClient.isAuthenticated();
     setIsLoggedIn(isLoggedIn);
     
-    const identity = authClient.getIdentity();
-    const principal = identity.getPrincipal();
+    if (isLoggedIn) {
+      const identity = authClient.getIdentity();
+      const principal = identity.getPrincipal();
 
-    const selfRes = await icphack_backend.self(principal);
-    
-    if (!selfRes?.error) {
-      setUser(selfRes);
-    } else {
-      // modal
+      const selfRes = await icphack_backend.self(principal);
+      
+      if (selfRes?.error.length !== 0) {
+        setUser(selfRes);
+      }
     }
    }
 
@@ -83,27 +134,33 @@ const Header = ({ loginCSS, light, setShowModal, setActionClick }) => {
           <Logo light={light} />
           <div></div>
           <div className='flex items-center gap-6'>
-            {isLoggedIn ? (
-              <div>User</div>
+            {(isLoggedIn && (user.error?.length === 0 && user.data?.length !== 0)) ? (
+               <Dropdown overlay={userMenu} trigger={['click']}>
+                <UserOutlined
+                  style={{
+                    fontSize: "24px",
+                    padding: "8px",
+                    backgroundColor: "#39FF14",
+                    borderRadius: "8px",
+                    color: "#212121",
+                    cursor: "pointer"
+                  }}
+                />
+              </Dropdown>
             ) : (
               <button className={loginCSS} onClick={login}>
                 Login
               </button>
             )}
-            <button className={loginCSS} onClick={logout}>
-              Logout
-            </button>
-            <div className='block lg:hidden'>
-              <button
-                onClick={() => setMobileMenu(true)}
-                className={`mobile-menu-trigger is-white`}
-              >
-                <span />
-              </button>
-            </div>
           </div>
         </div>
       </div>
+      <DetailUser
+        visible={isUserModalVisible}
+        onClose={handleUserModalClose}
+        user={user}
+        onUpdate={handleUserUpdate}
+      />
     </header>
   );
 };

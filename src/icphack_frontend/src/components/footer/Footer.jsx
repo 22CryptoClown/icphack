@@ -271,8 +271,8 @@ const Footer = () => {
               <div className='flex flex-wrap items-center justify-center gap-5 text-center md:justify-between md:text-left'>
                 <Link to='/'>
                   <img
-                    src='assets/img/logo-light.png'
-                    alt='logo-light'
+                    src='assets/img/treelancer.png'
+                    alt='treelancer'
                     width={111}
                     height={23}
                   />

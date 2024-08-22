@@ -9,19 +9,30 @@ import Hero from '../../components/sections/landing-page/Hero';
 import Content_03 from '../../components/sections/landing-page/Content_03';
 import Content_04 from '../../components/sections/landing-page/Content_04';
 import Faq from '../../components/sections/landing-page/Faq';
-import Testimonial from '../../components/sections/landing-page/Testimonial';
 import Cta from '../../components/sections/landing-page/Cta';
 import { CreateUser } from '../../components/modal/User/CreateUser';
 import { useState } from 'react';
 
-const Home = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [actionClick, setActionClick] = useState("");
-
+const Home = ({
+  showModal,
+  setShowModal,
+  inputUser,
+  setInputUser,
+  user,
+  setUser,
+  actionClick,
+  setActionClick
+}) => {
   return (
     <>
       {showModal && actionClick === "create-user" && (
-        <CreateUser showModal />
+        <CreateUser
+          showModal
+          setShowModal={setShowModal}
+          inputUser={inputUser}
+          setInputUser={setInputUser}
+          setUser={setUser}
+        />
       )}
       <div className='page-wrapper relative z-[1] bg-black text-white'>
         <Header
@@ -30,6 +41,9 @@ const Home = () => {
           light
           setShowModal={setShowModal}
           setActionClick={setActionClick}
+          inputUser={inputUser}
+          user={user}
+          setUser={setUser}
         />
         <main className='main-wrapper relative overflow-hidden'>
           <Hero />
