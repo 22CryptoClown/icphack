@@ -1,5 +1,7 @@
 import React from 'react';
-import { Layout, Menu, Form, Input, InputNumber, Upload, Button } from 'antd';
+import { Route, Routes } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
+import { Layout, Menu, Form, Input } from 'antd';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
   DashboardOutlined,
@@ -10,7 +12,10 @@ import {
   UnorderedListOutlined,
   UploadOutlined,
 } from '@ant-design/icons';
+import { icphack_backend } from 'declarations/icphack_backend';
 import '../../styles/dashboardLayout.css';
+import CreateProject from '../../components/form/CreateProject';
+import ProjectsList from '../../components/list/ProjectList';
 
 const { Content, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -27,6 +32,8 @@ const Dashboard = ({ user }) => {
   const handleMenuClick = (e) => {
     if (e.key === '6') {
       navigate('/dashboard/create-projects');
+    } else if (e.key === '8') {
+      navigate('/dashboard/projects');
     } else {
       navigate('/dashboard');
     }
@@ -50,67 +57,34 @@ const Dashboard = ({ user }) => {
     }
   };
 
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     console.log('Form values:', values);
     console.log("🚀 ~ onFinish ~ values:", values)
-    // Handle form submission here
+
+    try {
+      const createProjectRes = await icphack_backend.createProject({
+        ...values,
+        id: uuidv4()
+      })
+      console.log("🚀 ~ onFinish ~ createProjectRes:", createProjectRes)
+    } catch (error) {
+      console.error('Failed to update user:', error);
+    }
   };
 
   const renderContent = () => {
-    if (isCreateProject) {
-      return (
-        <Form
-          form={form}
-          layout="vertical"
-          onFinish={onFinish}
-          style={{ maxWidth: 600, margin: '0 auto' }}
-        >
-          <Form.Item name="workerID" label="Worker ID" rules={[{ required: true }]}>
-            <Input />
-          </Form.Item>
-          <Form.Item name="requiredDocuments" label="Required Documents">
-            <Upload
-              customRequest={({ onSuccess }) => setTimeout(() => onSuccess('ok'), 0)}
-              onChange={(info) => handleFileUpload(info, 'requiredDocuments')}
-            >
-              <Button icon={<UploadOutlined />}>Upload File</Button>
-            </Upload>
-          </Form.Item>
-          <Form.Item name="agreedFee" label="Agreed Fee" rules={[{ required: true }]}>
-            <InputNumber style={{ width: '100%' }} />
-          </Form.Item>
-          <Form.Item name="name" label="Project Name" rules={[{ required: true }]}>
-            <Input />
-          </Form.Item>
-          <Form.Item name="description" label="Description" rules={[{ required: true }]}>
-            <TextArea rows={4} />
-          </Form.Item>
-          <Form.Item name="supportingDocuments" label="Supporting Documents">
-            <Upload
-              customRequest={({ onSuccess }) => setTimeout(() => onSuccess('ok'), 0)}
-              onChange={(info) => handleFileUpload(info, 'supportingDocuments')}
-            >
-              <Button icon={<UploadOutlined />}>Upload File</Button>
-            </Upload>
-          </Form.Item>
-          <Form.Item name="customerID" label="Customer ID" rules={[{ required: true }]}>
-            <Input />
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit" style={{ background: '#000000', color: '#39FF14' }}>
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
-      );
-    } else {
-      return (
-        <div style={{ textAlign: 'center' }}>
-          <h1 style={{ fontSize: '48px', marginBottom: '8px' }}>Welcome to the Dashboard</h1>
-          <p>Select an option from the menu to view details.</p>
-        </div>
-      );
-    }
+    return (
+      <Routes>
+        <Route path="projects" element={<ProjectsList />} />
+        <Route path="create-projects" element={<CreateProject />} />
+        <Route path="/" element={
+          <div style={{ textAlign: 'center' }}>
+            <h1 style={{ fontSize: '48px', marginBottom: '8px' }}>Welcome to the Dashboard</h1>
+            <p>Select an option from the menu to view details.</p>
+          </div>
+        } />
+      </Routes>
+    );
   };
 
   return (
