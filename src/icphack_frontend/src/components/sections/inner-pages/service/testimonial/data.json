@@ -1,0 +1,44 @@
+[
+  {
+    "review": "“This AI SaaS tool has revolutionized the way we process and analyze data. This is a game-changer for our business.”",
+    "profile": "assets/img/th-1/testimonial-img-1.jpg",
+    "name": "Max Weber",
+    "info": "HR Manager",
+    "rating": "assets/img/th-1/rating.svg"
+  },
+  {
+    "review": "“It answers immediately, and we've seen a significant reduction in response time. Our customers love it and so do we!”",
+    "profile": "assets/img/th-1/testimonial-img-2.jpg",
+    "name": "Douglas Smith",
+    "info": "Businessman",
+    "rating": "assets/img/th-1/rating.svg"
+  },
+  {
+    "review": "“It is accurate, fast and supports multiple languages support. It is a must for any international business success.”",
+    "profile": "assets/img/th-1/testimonial-img-3.jpg",
+    "name": "Abraham Maslo",
+    "info": "Founder @ Marketing Company",
+    "rating": "assets/img/th-1/rating.svg"
+  },
+  {
+    "review": "“Security is a top concern for us, and AI SaaS takes it seriously. It's a reassuring layer of protection for our organization.”",
+    "profile": "assets/img/th-1/testimonial-img-4.jpg",
+    "name": "Jack Fayol",
+    "info": "HR Manager",
+    "rating": "assets/img/th-1/rating.svg"
+  },
+  {
+    "review": "“We were concerned about integrating their APIs were well documented, and their support team was super cool.”",
+    "profile": "assets/img/th-1/testimonial-img-5.jpg",
+    "name": "Karen Lynn",
+    "info": "Software Engineer",
+    "rating": "assets/img/th-1/rating.svg"
+  },
+  {
+    "review": "“The return on investment has exceeded our expectations. it's an investment in the future of our business.”",
+    "profile": "assets/img/th-1/testimonial-img-6.jpg",
+    "name": "Henry Ochi",
+    "info": "Bank Manager",
+    "rating": "assets/img/th-1/rating.svg"
+  }
+]

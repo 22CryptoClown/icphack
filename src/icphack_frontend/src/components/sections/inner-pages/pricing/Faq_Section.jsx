@@ -1,0 +1,121 @@
+import { Link } from 'react-router-dom';
+import useAccordion from '../../../../hooks/useAccordion';
+
+const Faq_Section = () => {
+  const [activeIndex, handleAccordion] = useAccordion();
+  return (
+    <section className='faq-section'>
+      {/* Section Spacer */}
+      <div className='pb-40 xl:pb-[200px]'>
+        {/* Section Container */}
+        <div className='global-container'>
+          <div className='grid grid-cols-1 gap-y-10 md:grid-cols-2'>
+            {/* FAQ Left Block */}
+            <div className='jos flex flex-col' data-jos_animation='fade-right'>
+              {/* Section Content Block */}
+              <div className='mb-8 text-left lg:mb-16 xl:mb-6'>
+                <div className='mx-auto md:mx-0 md:max-w-none'>
+                  <h2>Freely ask us for more information</h2>
+                </div>
+              </div>
+              {/* Section Content Block */}
+              <div className='text-lg leading-[1.4] lg:text-[21px]'>
+                <p className='mb-7 last:mb-0'>
+                  Our AI SaaS solutions can be quickly deployed, enabling users
+                  to start benefiting from AI capabilities without lengthy setup
+                  and development times in fast-paced industries.
+                </p>
+                <Link
+                  to='/faq-1'
+                  className='button mt-5 rounded-[50px] border-2 border-black bg-black py-4 text-white after:bg-colorOrangyRed hover:border-colorOrangyRed hover:text-white'
+                >
+                  Ask you questions
+                </Link>
+              </div>
+            </div>
+            {/* FAQ Left Block */}
+            {/* FAQ Right Block */}
+            <div
+              className='jos md:ml-10 lg:ml-20 xl:ml-32'
+              data-jos_animation='fade-left'
+            >
+              {/* Accordion*/}
+              <ul className='accordion'>
+                {/* Accordion items */}
+                <li
+                  onClick={() => handleAccordion(0)}
+                  className={`accordion-item border-b-[1px] border-[#DBD6CF] pb-6 pt-6 first:pt-0 last:border-b-0 last:pb-0 ${
+                    activeIndex === 0 ? 'active' : ''
+                  }`}
+                >
+                  <div className='accordion-header flex items-center justify-between font-dmSans text-xl font-bold leading-[1.2] -tracking-[0.5px] text-black lg:text-[28px]'>
+                    <p>How do I start AI SaaS?</p>
+                    <div className='accordion-icon'>
+                      <img src='assets/img/plus.svg' alt='plus' />
+                    </div>
+                  </div>
+                  <div className='accordion-content disappear translate-y-3 text-lg leading-[1.66] text-[#2C2C2C]'>
+                    <p>
+                      Go to the our official website and require users to create
+                      an account. You'll need to provide some basic information
+                      and agree to our terms and conditions.
+                    </p>
+                  </div>
+                </li>
+                {/* Accordion items */}
+                {/* Accordion items */}
+                <li
+                  onClick={() => handleAccordion(1)}
+                  className={`accordion-item border-b-[1px] border-[#DBD6CF] pb-6 pt-6 first:pt-0 last:border-b-0 last:pb-0 ${
+                    activeIndex === 1 ? 'active' : ''
+                  }`}
+                >
+                  <div className='accordion-header flex items-center justify-between font-dmSans text-xl font-bold leading-[1.2] -tracking-[0.5px] text-black lg:text-[28px]'>
+                    <p>Can I customize AI SaaS solutions?</p>
+                    <div className='accordion-icon'>
+                      <img src='assets/img/plus.svg' alt='plus' />
+                    </div>
+                  </div>
+                  <div className='accordion-content disappear translate-y-3 text-lg leading-[1.66] text-[#2C2C2C]'>
+                    <p>
+                      Go to the our official website and require users to create
+                      an account. You'll need to provide some basic information
+                      and agree to our terms and conditions.
+                    </p>
+                  </div>
+                </li>
+                {/* Accordion items */}
+                {/* Accordion items */}
+                <li
+                  onClick={() => handleAccordion(2)}
+                  className={`accordion-item border-b-[1px] border-[#DBD6CF] pb-6 pt-6 first:pt-0 last:border-b-0 last:pb-0 ${
+                    activeIndex === 2 ? 'active' : ''
+                  }`}
+                >
+                  <div className='accordion-header flex items-center justify-between font-dmSans text-xl font-bold leading-[1.2] -tracking-[0.5px] text-black lg:text-[28px]'>
+                    <p>How can AI benefit my business?</p>
+                    <div className='accordion-icon'>
+                      <img src='assets/img/plus.svg' alt='plus' />
+                    </div>
+                  </div>
+                  <div className='accordion-content disappear translate-y-3 text-lg leading-[1.66] text-[#2C2C2C]'>
+                    <p>
+                      Go to the our official website and require users to create
+                      an account. You'll need to provide some basic information
+                      and agree to our terms and conditions.
+                    </p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            {/* FAQ Right Block */}
+          </div>
+        </div>
+        {/* Section Container */}
+      </div>
+      {/* Section Spacer */}
+    </section>
+  );
+};
+
+export default Faq_Section;

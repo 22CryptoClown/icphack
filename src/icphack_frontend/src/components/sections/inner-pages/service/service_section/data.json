@@ -1,0 +1,50 @@
+[
+  {
+    "icon_black": "assets/img/th-1/service-icon-black-1.svg",
+    "icon_orange": "assets/img/th-1/service-icon-orange-1.svg",
+    "title": "Resource Flexibility",
+    "text": "This is an excellent option for people &amp; small businesses who are starting out."
+  },
+  {
+    "icon_black": "assets/img/th-1/service-icon-black-2.svg",
+    "icon_orange": "assets/img/th-1/service-icon-orange-2.svg",
+    "title": "Managed Services",
+    "text": "This is an excellent option for people &amp; small businesses who are starting out."
+  },
+  {
+    "icon_black": "assets/img/th-1/service-icon-black-3.svg",
+    "icon_orange": "assets/img/th-1/service-icon-orange-3.svg",
+    "title": "Web-Based Access",
+    "text": "This is an excellent option for people &amp; small businesses who are starting out."
+  },
+  {
+    "icon_black": "assets/img/th-1/service-icon-black-4.svg",
+    "icon_orange": "assets/img/th-1/service-icon-orange-4.svg",
+    "title": "Resource Flexibility",
+    "text": "This is an excellent option for people &amp; small businesses who are starting out."
+  },
+  {
+    "icon_black": "assets/img/th-1/service-icon-black-5.svg",
+    "icon_orange": "assets/img/th-1/service-icon-orange-5.svg",
+    "title": "Anomaly Detection",
+    "text": "AI SaaS can analyze IoT sensor data to detect predict equipment failures."
+  },
+  {
+    "icon_black": "assets/img/th-1/service-icon-black-6.svg",
+    "icon_orange": "assets/img/th-1/service-icon-orange-6.svg",
+    "title": "Predictive Analytics",
+    "text": "Solutions that use AI to predict future trends and outcomes, such as demand forecastin."
+  },
+  {
+    "icon_black": "assets/img/th-1/service-icon-black-6.svg",
+    "icon_orange": "assets/img/th-1/service-icon-orange-6.svg",
+    "title": "Speech Recognition",
+    "text": "Speech recognition services convert spoken language into text and accessibility."
+  },
+  {
+    "icon_black": "assets/img/th-1/service-icon-black-6.svg",
+    "icon_orange": "assets/img/th-1/service-icon-orange-6.svg",
+    "title": "Computer Vision",
+    "text": "Computer vision services use AI to interpret and process visual information."
+  }
+]
