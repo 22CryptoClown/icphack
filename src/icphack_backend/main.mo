@@ -2,7 +2,6 @@ import Map "mo:map/Map";
 import Principal "mo:base/Principal";
 import Text "mo:base/Text";
 import Nat64 "mo:base/Nat64";
-import Blob "mo:base/Blob";
 import Iter "mo:base/Iter";
 import Bool "mo:base/Bool";
 import Time "mo:base/Time";
@@ -17,7 +16,7 @@ actor {
     name: Text;
     description: Text;
     agreedFee: Nat64;
-    requiredDocuments: Blob;
+    requiredDocuments: [Text];
     customerID: Text;
     workerID: Text;
   };
@@ -27,8 +26,8 @@ actor {
     name: Text;
     description: Text;
     agreedFee: Nat64;
-    requiredDocuments: [Blob];
-    supportingDocuments: [Blob];
+    requiredDocuments: [Text];
+    supportingDocuments: [Text];
     customerID: Principal;
     workerID: Principal;
     signedAt: ?Time.Time;
@@ -143,7 +142,7 @@ actor {
       name = input.name;
       description = input.description;
       agreedFee = input.agreedFee;
-      requiredDocuments = [input.requiredDocuments];
+      requiredDocuments = input.requiredDocuments;
       supportingDocuments = [];
       customerID = customerID;
       workerID = workerID;
@@ -234,7 +233,7 @@ actor {
     return {data = ?newProject; error = null};
   };
 
-  public func finalizationProof(principal: Principal, projectID: Text, files: [Blob]): async response.Response<Project> {
+  public func finalizationProof(principal: Principal, projectID: Text, files: [Text]): async response.Response<Project> {
     let principalText = Principal.toText(principal);
     let user: User = switch (Map.get(users, Map.thash, principalText)) {
       case (?user) user;
