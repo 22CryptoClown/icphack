@@ -9,18 +9,26 @@ const { TextArea } = Input;
 const CreateProject = () => {
   const [form] = Form.useForm();
 
-  const handleFileUpload = (info, fieldName) => {
+  const toBase64 = file => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = () => reject;
+  });
+
+  const handleFileUpload = async (info, fieldName) => {
     const { status } = info.file;
     if (status === 'done') {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const blob = new Blob([e.target.result]);
+      try {
+        const base64 = await toBase64(info.file.originFileObj);
         form.setFieldsValue({
-          [fieldName]: blob
+          [fieldName]: [base64]
         });
         message.success(`${info.file.name} file uploaded successfully.`);
-      };
-      reader.readAsArrayBuffer(info.file.originFileObj);
+      } catch (error) {
+        console.error('Error converting file to base64:', error);
+        message.error(`${info.file.name} file upload failed.`);
+      }
     } else if (status === 'error') {
       message.error(`${info.file.name} file upload failed.`);
     }
@@ -29,12 +37,10 @@ const CreateProject = () => {
   const onFinish = async (values) => {
     console.log('Form values:', values);
     try {
-      const createProjectRes = await icphack_backend.createProject({
-        ...values,
-        id: uuidv4()
-      });
+      const createProjectRes = await icphack_backend.createProject(values);
       console.log("Project creation response:", createProjectRes);
       message.success('Project created successfully');
+      form.resetFields();
     } catch (error) {
       console.error('Failed to create project:', error);
       message.error('Failed to create project');
