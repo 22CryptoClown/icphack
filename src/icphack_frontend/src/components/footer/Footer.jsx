@@ -44,17 +44,7 @@ const Footer = () => {
                         Services
                       </Link>
                     </li>
-                    <li>
-                      <Link
-                        onClick={()=>{
-                          const section = document.querySelector( '#pricing' );
-                          section.scrollIntoView( { behavior: 'smooth', block: 'start' } );
-                        }}
-                        className='transition-all duration-300 ease-linear hover:text-colorGreen'
-                      >
-                        Pricing
-                      </Link>
-                    </li>
+                    
                     
                   </ul>
                 </div>
