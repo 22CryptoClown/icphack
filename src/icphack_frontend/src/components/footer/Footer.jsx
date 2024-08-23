@@ -24,7 +24,10 @@ const Footer = () => {
                   <ul className='flex flex-col gap-y-[10px] capitalize'>
                     <li>
                       <Link
-                        to='#'
+                        onClick={()=>{
+                          const section = document.querySelector( '#home' );
+                          section.scrollIntoView( { behavior: 'smooth', block: 'start' } );
+                        }}
                         className='transition-all duration-300 ease-linear hover:text-colorGreen'
                       >
                         Home
@@ -32,7 +35,10 @@ const Footer = () => {
                     </li>
                     <li>
                       <Link
-                        to='#service'
+                        onClick={()=>{
+                          const section = document.querySelector( '#service' );
+                          section.scrollIntoView( { behavior: 'smooth', block: 'start' } );
+                        }}
                         className='transition-all duration-300 ease-linear hover:text-colorGreen'
                       >
                         Services
@@ -40,7 +46,10 @@ const Footer = () => {
                     </li>
                     <li>
                       <Link
-                        to='#pricing'
+                        onClick={()=>{
+                          const section = document.querySelector( '#pricing' );
+                          section.scrollIntoView( { behavior: 'smooth', block: 'start' } );
+                        }}
                         className='transition-all duration-300 ease-linear hover:text-colorGreen'
                       >
                         Pricing

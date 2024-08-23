@@ -4,7 +4,7 @@ import useTabs from '../../../hooks/useTabs';
 const Pricing_Section = () => {
   const [activeTab, handleTab] = useTabs();
   return (
-    <section className='pricing-section'>
+    <section className='pricing-section' id='pricing'>
       {/* Section Spacer */}
       <div className='pb-20 xl:pb-[150px]'>
         {/* Section Container */}
