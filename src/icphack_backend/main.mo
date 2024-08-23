@@ -17,7 +17,7 @@ actor {
     name: Text;
     description: Text;
     agreedFee: Nat64;
-    requiredDocuments: [Blob];
+    requiredDocuments: Blob;
     customerID: Text;
     workerID: Text;
   };
@@ -143,7 +143,7 @@ actor {
       name = input.name;
       description = input.description;
       agreedFee = input.agreedFee;
-      requiredDocuments = input.requiredDocuments;
+      requiredDocuments = [input.requiredDocuments];
       supportingDocuments = [];
       customerID = customerID;
       workerID = workerID;
