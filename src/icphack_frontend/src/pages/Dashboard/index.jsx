@@ -32,7 +32,7 @@ const Dashboard = ({ user }) => {
   const handleMenuClick = (e) => {
     if (e.key === '6') {
       navigate('/dashboard/create-projects');
-    } else if (e.key === '8') {
+    } else if (e.key === '8' || e.key === '2') {
       navigate('/dashboard/projects');
     } else {
       navigate('/dashboard');
@@ -59,14 +59,12 @@ const Dashboard = ({ user }) => {
 
   const onFinish = async (values) => {
     console.log('Form values:', values);
-    console.log("🚀 ~ onFinish ~ values:", values)
 
     try {
       const createProjectRes = await icphack_backend.createProject({
         ...values,
         id: uuidv4()
       })
-      console.log("🚀 ~ onFinish ~ createProjectRes:", createProjectRes)
     } catch (error) {
       console.error('Failed to update user:', error);
     }
@@ -113,7 +111,6 @@ const Dashboard = ({ user }) => {
           ) : (
             <SubMenu key="customer" icon={<UserOutlined />} title="Customer">
               <Menu.Item key="2" icon={<ProjectOutlined />}>List Projects</Menu.Item>
-              <Menu.Item key="3" icon={<FileTextOutlined />}>Incoming request list</Menu.Item>
             </SubMenu>
           )}
         </Menu>
