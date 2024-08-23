@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+
 import { AuthClient } from '@dfinity/auth-client';
 
 const Content_01 = () => {
@@ -49,7 +50,9 @@ const Content_01 = () => {
             <div className='jos' data-jos_animation='fade-left'>
               <div className='overflow-hidden rounded-[10px]'>
                 <img
+
                   src='assets/img/th-4/content-img-2.jpg'
+
                   alt='content-img-2'
                   width={550}
                   height={550}
@@ -61,12 +64,15 @@ const Content_01 = () => {
               {/* Section Content Block */}
               <div className='mb-6'>
                 <h2 className='font-spaceGrotesk text-4xl font-medium leading-[1.06] -tracking-[2px] text-white sm:text-[44px] lg:text-[56px] xl:text-[70px]'>
+
                   Freelancing Should Be Empowering, Not Costly
+
                 </h2>
               </div>
               {/* Section Content Block */}
               <div>
                 <p className='mb-8 text-lg leading-[1.42] last:mb-0 lg:text-[21px]'>
+
                 Freelancing should empower, not burden you with hidden costs and uncertainty. Freelancers today face high platform fees that can eat up to half of their earnings, leaving them with less than they deserve. Additionally, the lack of secure and transparent agreements outside these platforms exposes freelancers and clients to unnecessary risks and disputes.
                 </p>
                 {/* <p className='mb-8 text-lg leading-[1.42] last:mb-0 lg:text-[21px]'>
@@ -79,6 +85,7 @@ const Content_01 = () => {
                   className='button inline-block h-full rounded border-none bg-colorGreen py-3 text-base text-black after:border-none after:bg-white'
                 >
                   Try our solutions
+
                 </Link>
               </div>
             </div>

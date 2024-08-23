@@ -2,7 +2,6 @@ import Map "mo:map/Map";
 import Principal "mo:base/Principal";
 import Text "mo:base/Text";
 import Nat64 "mo:base/Nat64";
-import Blob "mo:base/Blob";
 import Iter "mo:base/Iter";
 import Bool "mo:base/Bool";
 import Time "mo:base/Time";
@@ -13,16 +12,27 @@ import User "user";
 import response "response";
 
 actor {
+  type CreateProjectReq = {
+    name: Text;
+    description: Text;
+    agreedFee: Nat64;
+    requiredDocuments: [Text];
+    customerID: Text;
+    workerID: Text;
+  };
+
   type Project = {
     id: UUID.UUID;
     name: Text;
     description: Text;
     agreedFee: Nat64;
-    requiredDocuments: [Blob];
-    supportingDocuments: [Blob];
+    requiredDocuments: [Text];
+    supportingDocuments: [Text];
+    txID: ?Text;
     customerID: Principal;
     workerID: Principal;
     signedAt: ?Time.Time;
+    finalizedAt: ?Time.Time;
   };
 
   public type User = {
@@ -94,9 +104,9 @@ actor {
     return {data = ?newUser; error = null};
   };
 
-  public func createProject(input: Project): async response.Response<Project> {
-    let workerID = Principal.toText(input.workerID);
-    let worker = switch (Map.get(users, Map.thash, workerID)) {
+  public func createProject(input: CreateProjectReq): async response.Response<Project> {
+    let workerID = Principal.fromText(input.workerID);
+    let worker = switch (Map.get(users, Map.thash, input.workerID)) {
       case (?user) user;
       case null return {data = null; error = ?{message = "Worker ID either invalid or not found"}};
     };
@@ -105,8 +115,8 @@ actor {
       return {data = null; error = ?{message = "Worker ID either invalid or not found"}}
     };
 
-    let customerID = Principal.toText(input.customerID);
-    let customer = switch (Map.get(users, Map.thash, customerID)) {
+    let customerID = Principal.fromText(input.customerID);
+    let customer = switch (Map.get(users, Map.thash, input.customerID)) {
       case (?user) user;
       case null return {data = null; error = ?{message = "Customer ID either invalid or not found"}};
     };
@@ -115,11 +125,11 @@ actor {
       return {data = null; error = ?{message = "Customer ID either invalid or not found"}}
     };
 
-    let workerProjects = switch (Map.get(workerProjectsMap, Map.thash, workerID)) {
+    let workerProjects = switch (Map.get(workerProjectsMap, Map.thash, input.workerID)) {
       case (?projects) projects;
       case null Map.new<Text, Project>();
     };
-    let customerProjects = switch (Map.get(customerProjectsMap, Map.thash, customerID)) {
+    let customerProjects = switch (Map.get(customerProjectsMap, Map.thash, input.customerID)) {
       case (?projects) projects;
       case null Map.new<Text, Project>();
     };
@@ -134,17 +144,19 @@ actor {
       description = input.description;
       agreedFee = input.agreedFee;
       requiredDocuments = input.requiredDocuments;
-      supportingDocuments = input.supportingDocuments;
-      customerID = input.customerID;
-      workerID = input.workerID;
+      supportingDocuments = [];
+      customerID = customerID;
+      workerID = workerID;
       signedAt = null;
+      finalizedAt = null;
+      txID = null;
     };
 
     Map.set(workerProjects, Map.thash, idText, project);
     Map.set(customerProjects, Map.thash, idText, project);
 
-    Map.set(workerProjectsMap, Map.thash, workerID, workerProjects);
-    Map.set(customerProjectsMap, Map.thash, customerID, customerProjects);
+    Map.set(workerProjectsMap, Map.thash, input.workerID, workerProjects);
+    Map.set(customerProjectsMap, Map.thash, input.customerID, customerProjects);
 
     Debug.print(debug_show(idText));
 
@@ -174,7 +186,7 @@ actor {
     return {data = ?projectsArr; error = null};
   };
 
-  public func signProject(principal: Principal, projectID: Text): async response.Response<Project> {
+  public func signProject(principal: Principal, projectID: Text, txID: Text): async response.Response<Project> {
     let principalText = Principal.toText(principal);
     let user: User = switch (Map.get(users, Map.thash, principalText)) {
       case (?user) user;
@@ -185,12 +197,7 @@ actor {
       return {data = null; error = ?{message = "Worker cannot sign contract"}};
     };
 
-    let mapToSearch = switch(user.isWorker) {
-      case (true) workerProjectsMap;
-      case (false) customerProjectsMap;
-    };
-
-    let projectsMap = switch (Map.get(mapToSearch, Map.thash, principalText)) {
+    let projectsMap = switch (Map.get(customerProjectsMap, Map.thash, principalText)) {
       case (?projects) projects;
       case null return {data = null; error = ?{message = "This user has no projects"}};
     };
@@ -214,16 +221,122 @@ actor {
       customerID = existingProject.customerID;
       workerID = existingProject.workerID;
       signedAt = ?Time.now();
+      finalizedAt = existingProject.finalizedAt;
+      txID = ?txID;
     };
+
+    let customerIDText = Principal.toText(existingProject.customerID);
+    let workerIDText = Principal.toText(existingProject.workerID);
 
     Map.set(projectsMap, Map.thash, projectID, newProject);
 
-    if (user.isWorker) {
-      Map.set(workerProjectsMap, Map.thash, principalText, projectsMap);
-    } else {
-      Map.set(customerProjectsMap, Map.thash, principalText, projectsMap);
-    };
+    Map.set(workerProjectsMap, Map.thash, workerIDText, projectsMap);
+    Map.set(customerProjectsMap, Map.thash, customerIDText, projectsMap);
 
     return {data = ?newProject; error = null};
   };
+
+  public func finalizationProof(principal: Principal, projectID: Text, files: [Text]): async response.Response<Project> {
+    let principalText = Principal.toText(principal);
+    let user: User = switch (Map.get(users, Map.thash, principalText)) {
+      case (?user) user;
+      case null return {data = null; error = ?{message = "User ID either invalid or not found"}};
+    };
+
+    if (user.isWorker == false) {
+      return {data = null; error = ?{message = "Customer cannot upload proof of finalization"}};
+    };
+
+    let projectsMap = switch (Map.get(workerProjectsMap, Map.thash, principalText)) {
+      case (?projects) projects;
+      case null return {data = null; error = ?{message = "You have no projects"}};
+    };
+
+    let existingProject = switch (Map.get(projectsMap, Map.thash, projectID)) {
+      case (?project) project;
+      case null return {data = null; error = ?{message = "Contract ID either invalid or not found"}};
+    };
+
+    if (existingProject.signedAt == null) {
+      return {data = null; error = ?{message = "Contract is not signed yet"}};
+    };
+
+    let newProject = {
+      id = existingProject.id;
+      name = existingProject.name;
+      description = existingProject.description;
+      agreedFee = existingProject.agreedFee;
+      requiredDocuments = existingProject.requiredDocuments;
+      supportingDocuments = files;
+      customerID = existingProject.customerID;
+      workerID = existingProject.workerID;
+      signedAt = existingProject.signedAt;
+      finalizedAt = existingProject.finalizedAt;
+      txID = existingProject.txID;
+    };
+
+    let customerIDText = Principal.toText(existingProject.customerID);
+    let workerIDText = Principal.toText(existingProject.workerID);
+
+    Map.set(projectsMap, Map.thash, projectID, newProject);
+
+    Map.set(workerProjectsMap, Map.thash, workerIDText, projectsMap);
+    Map.set(customerProjectsMap, Map.thash, customerIDText, projectsMap);
+
+    return {data = ?newProject; error = null};
+  };
+
+  public func finalizeContract(principal: Principal, projectID: Text): async response.Response<Project> {
+    let principalText = Principal.toText(principal);
+    let user: User = switch (Map.get(users, Map.thash, principalText)) {
+      case (?user) user;
+      case null return {data = null; error = ?{message = "User ID either invalid or not found"}};
+    };
+
+    if (user.isWorker) {
+      return {data = null; error = ?{message = "Worker cannot finalize contract"}};
+    };
+
+    let projectsMap = switch (Map.get(customerProjectsMap, Map.thash, principalText)) {
+      case (?projects) projects;
+      case null return {data = null; error = ?{message = "This user has no projects"}};
+    };
+
+    let existingProject = switch (Map.get(projectsMap, Map.thash, projectID)) {
+      case (?project) project;
+      case null return {data = null; error = ?{message = "Contract ID either invalid or not found"}}
+    };
+
+    if (existingProject.supportingDocuments == []) {
+      return {data = null; error = ?{message = "Contract have not been finalized by worker"}};
+    };
+
+    if (existingProject.finalizedAt != null) {
+      return {data = null; error = ?{message = "Contract already finalized"}};
+    };
+
+    let newProject = {
+      id = existingProject.id;
+      name = existingProject.name;
+      description = existingProject.description;
+      agreedFee = existingProject.agreedFee;
+      requiredDocuments = existingProject.requiredDocuments;
+      supportingDocuments = existingProject.supportingDocuments;
+      customerID = existingProject.customerID;
+      workerID = existingProject.workerID;
+      signedAt = existingProject.signedAt;
+      finalizedAt = ?Time.now();
+      txID = existingProject.txID;
+    };
+
+    let customerIDText = Principal.toText(existingProject.customerID);
+    let workerIDText = Principal.toText(existingProject.workerID);
+
+    Map.set(projectsMap, Map.thash, projectID, newProject);
+
+    Map.set(workerProjectsMap, Map.thash, workerIDText, projectsMap);
+    Map.set(customerProjectsMap, Map.thash, customerIDText, projectsMap);
+
+    return {data = ?newProject; error = null};
+  }
 };

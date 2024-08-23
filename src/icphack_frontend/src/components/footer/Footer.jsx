@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
+
 import logoNew from '../../assets/img/logo-threelancer-1.png';
+
 
 const Footer = () => {
   return (
@@ -24,10 +26,12 @@ const Footer = () => {
                   <ul className='flex flex-col gap-y-[10px] capitalize'>
                     <li>
                       <Link
+
                         onClick={()=>{
                           const section = document.querySelector( '#home' );
                           section.scrollIntoView( { behavior: 'smooth', block: 'start' } );
                         }}
+
                         className='transition-all duration-300 ease-linear hover:text-colorGreen'
                       >
                         Home
@@ -35,17 +39,18 @@ const Footer = () => {
                     </li>
                     <li>
                       <Link
+
                         onClick={()=>{
                           const section = document.querySelector( '#service' );
                           section.scrollIntoView( { behavior: 'smooth', block: 'start' } );
                         }}
+
                         className='transition-all duration-300 ease-linear hover:text-colorGreen'
                       >
                         Services
                       </Link>
                     </li>
-                    
-                    
+
                   </ul>
                 </div>
                 {/* Footer Widget Item */}
@@ -150,15 +155,19 @@ const Footer = () => {
               <div className='flex flex-wrap items-center justify-center gap-5 text-center md:justify-between md:text-left'>
                 <Link to='/'>
                   <img
+
                     src={logoNew}
                     alt='logo-light'
+
                     width={111}
                     height={23}
                   />
                 </Link>
                 <p>
                   © Copyright {new Date().getFullYear()}, All Rights Reserved by
+
                   Threelancer
+
                 </p>
               </div>
             </div>

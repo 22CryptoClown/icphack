@@ -1,15 +1,20 @@
 import { Link } from 'react-router-dom';
-import logoNew from '../../assets/img/logo-threelancer-1.png';
+
+
+import defaultLogo from '../../assets/img/treelancer.png';
+
 
 // eslint-disable-next-line react/prop-types
 const LogoDark = ({ light }) => {
   return (
     <Link to='/'>
       <img
-        src={logoNew}
+
+        src={defaultLogo}
         alt='AIMass'
-        width='200'
-        height='50'
+        width='120'
+        height='48'
+
       />
     </Link>
   );

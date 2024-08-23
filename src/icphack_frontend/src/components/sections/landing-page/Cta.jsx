@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+
 import { AuthClient } from '@dfinity/auth-client';
 
 const Cta = () => {
@@ -38,6 +39,7 @@ const Cta = () => {
     }
   }
 
+
   return (
     <section id='cta-section'>
       <div className='global-container'>
@@ -45,7 +47,9 @@ const Cta = () => {
           {/* Section Content Block */}
           <div className='jos mx-auto max-w-[500px] text-center lg:max-w-2xl xl:max-w-[840px]'>
             <h2 className='font-spaceGrotesk text-4xl font-medium leading-[1.06] -tracking-[2px] text-black sm:text-[44px] lg:text-[56px] xl:text-[70px]'>
+
               Ready to Experience Freelancing on Chain
+
             </h2>
           </div>
           {/* Section Content Block */}
@@ -55,11 +59,14 @@ const Cta = () => {
           >
             <Link
               rel='noopener noreferrer'
+
               onClick={login}
+
               className='button inline-block h-full rounded border-2 border-transparent bg-black py-3 text-base text-colorGreen after:border-colorGreen after:bg-colorGreen hover:text-black'
             >
               Get Started Now
             </Link>
+
           </div>
         </div>
       </div>

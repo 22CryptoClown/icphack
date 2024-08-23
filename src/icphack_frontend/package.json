@@ -11,6 +11,9 @@
     "format": "prettier --write \"src/**/*.{json,js,jsx,ts,tsx,css,scss}\""
   },
   "dependencies": {
+
+    "@ant-design/icons": "^5.4.0",
+
     "@dfinity/agent": "^1.4.0",
     "@dfinity/auth-client": "^1.4.0",
     "@dfinity/candid": "^1.4.0",
@@ -24,7 +27,10 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.20.1",
     "sweetalert": "^2.1.2",
-    "swiper": "^11.0.5"
+
+    "swiper": "^11.0.5",
+    "uuid": "^10.0.0"
+
   },
   "devDependencies": {
     "@types/react": "^18.2.14",
