@@ -13,6 +13,7 @@ import Testimonial from '../../components/sections/landing-page/Testimonial';
 import Cta from '../../components/sections/landing-page/Cta';
 import { CreateUser } from '../../components/modal/User/CreateUser';
 import { useState } from 'react';
+import Pricing_Section from '../../components/sections/landing-page/Pricing_Section';
 
 const Home = () => {
   const [showModal, setShowModal] = useState(false);
@@ -41,12 +42,11 @@ const Home = () => {
           </div>
           <Service />
           <Slider />
-          <Content_03 />
           <Content_04 />
+          <Pricing_Section></Pricing_Section>
           <div className='global-container overflow-hidden'>
             <div className='h-[1px] w-full bg-[#363636]' />
           </div>
-          <Faq />
           <Cta />
         </main>
         <Footer />

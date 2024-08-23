@@ -11,7 +11,7 @@ const Content_01 = () => {
             <div className='jos' data-jos_animation='fade-left'>
               <div className='overflow-hidden rounded-[10px]'>
                 <img
-                  src='assets/img/th-4/content-img-1.jpg'
+                  src='assets/img/th-4/content-img-2.jpg'
                   alt='content-img-2'
                   width={550}
                   height={550}
@@ -23,27 +23,23 @@ const Content_01 = () => {
               {/* Section Content Block */}
               <div className='mb-6'>
                 <h2 className='font-spaceGrotesk text-4xl font-medium leading-[1.06] -tracking-[2px] text-white sm:text-[44px] lg:text-[56px] xl:text-[70px]'>
-                  Securing networks, servers and data
+                  Freelancing Should Be Empowering, Not Costly
                 </h2>
               </div>
               {/* Section Content Block */}
               <div>
                 <p className='mb-8 text-lg leading-[1.42] last:mb-0 lg:text-[21px]'>
-                  Large corporations &amp; businesses across industries use our
-                  AI cybersecurity solutions to safeguard their networks,
-                  servers, &amp; data from cyber threats.
+                Freelancing should empower, not burden you with hidden costs and uncertainty. Freelancers today face high platform fees that can eat up to half of their earnings, leaving them with less than they deserve. Additionally, the lack of secure and transparent agreements outside these platforms exposes freelancers and clients to unnecessary risks and disputes.
                 </p>
-                <p className='mb-8 text-lg leading-[1.42] last:mb-0 lg:text-[21px]'>
-                  Our cyber security platform supercharges your security with
-                  AI-powered security tools. Turn mountains of data into
-                  actionable insights and respond in real-time.
-                </p>
+                {/* <p className='mb-8 text-lg leading-[1.42] last:mb-0 lg:text-[21px]'>
+                 Lorem Ipsum
+                </p> */}
                 <Link
                   rel='noopener noreferrer'
-                  to='/about'
+                  to='/'
                   className='button inline-block h-full rounded border-none bg-colorGreen py-3 text-base text-black after:border-none after:bg-white'
                 >
-                  Explore the Platform
+                  Try our solutions
                 </Link>
               </div>
             </div>

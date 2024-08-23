@@ -8,7 +8,7 @@ const Cta = () => {
           {/* Section Content Block */}
           <div className='jos mx-auto max-w-[500px] text-center lg:max-w-2xl xl:max-w-[840px]'>
             <h2 className='font-spaceGrotesk text-4xl font-medium leading-[1.06] -tracking-[2px] text-black sm:text-[44px] lg:text-[56px] xl:text-[70px]'>
-              Protect your organization with the power of AI
+              Ready to Experience Freelancing on Chain
             </h2>
           </div>
           {/* Section Content Block */}

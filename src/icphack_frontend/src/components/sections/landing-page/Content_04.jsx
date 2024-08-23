@@ -5,7 +5,7 @@ const Content_04 = () => {
   return (
     <section id='content-section-4'>
       {/* Section Spacer */}
-      <div className='pb-20 xl:pb-[150px]'>
+      <div className='pb-20 xl:pb-[150px] pt-20'>
         {/* Section Container */}
         <div className='global-container'>
           <div className='grid items-center gap-12 lg:grid-cols-[minmax(0,_.75fr)_1fr] lg:gap-20 xl:gap-24'>
