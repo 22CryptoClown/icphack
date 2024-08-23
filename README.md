@@ -5,7 +5,7 @@
 
 # Threelancer
 
-Threelancers is a pioneering platform that empowers freelancers and clients by bringing contract management on-chain. Built on the Internet Computer (ICP) blockchain, Threelancers offers secure, transparent, and immutable solutions for freelance contract management, payment processing, and project documentation. 
+Threelancer is a pioneering platform that empowers freelancers and clients by bringing contract management on-chain. Built on the Internet Computer (ICP) blockchain, Threelancer offers secure, transparent, and immutable solutions for freelance contract management, payment processing, and project documentation. 
 
 ## Track We are Applying For
 Fully on-chain DApps
@@ -38,7 +38,7 @@ Fully on-chain DApps
 - [What We Proud of](#what-we-proud-of)
 
 ## Introduction
-Freelancing should be empowering, not burdened with hidden costs and uncertainty. Traditional platforms often take significant cuts from your earnings, leaving freelancers with less for their hard work. Moreover, without a secure and transparent way to manage agreements, freelancers and clients face unnecessary risks and potential disputes. Threelancers addresses these challenges by leveraging blockchain technology to create a transparent, secure, and cost-effective platform for freelance contract management.
+Freelancing should be empowering, not burdened with hidden costs and uncertainty. Traditional platforms often take significant cuts from your earnings, leaving freelancers with less for their hard work. Moreover, without a secure and transparent way to manage agreements, freelancers and clients face unnecessary risks and potential disputes. Threelancer addresses these challenges by leveraging blockchain technology to create a transparent, secure, and cost-effective platform for freelance contract management.
 
 ## Key Features
 - **Contract Signing on Chain**: Users can upload and sign contracts securely using Internet Identity, ensuring legitimacy and transparency.
@@ -74,10 +74,10 @@ The Internet Computer (ICP) is a fast, scalable, and cost-effective blockchain n
 - Scale the platform to support a broader range of users.
 
 ## Beliefs and Impact
-We believe that Threelancers can significantly lower costs, greatly enhance value, and drastically reduce risks for freelancers and clients. Our platform aims to reduce costs by eliminating high platform fees, add value by enhancing the freelancing experience with secure and transparent features, and reduce risks by minimizing disputes and ensuring fair payment practices.
+We believe that Threelancer can significantly lower costs, greatly enhance value, and drastically reduce risks for freelancers and clients. Our platform aims to reduce costs by eliminating high platform fees, add value by enhancing the freelancing experience with secure and transparent features, and reduce risks by minimizing disputes and ensuring fair payment practices.
 
 ## Getting Started
-To get started with Threelancers, sign up on our platform and choose the pricing tier that best suits your needs. Begin creating, signing, and managing your freelance contracts securely on-chain.
+To get started with Threelancer, sign up on our platform and choose the pricing tier that best suits your needs. Begin creating, signing, and managing your freelance contracts securely on-chain.
 
 ## Run the App Locally
 ### Requirements
