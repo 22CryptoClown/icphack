@@ -8,7 +8,6 @@ const Footer = () => {
         {/* Section Container */}
         <div className='pb-10'>
           {/* Footer Center */}
-<<<<<<< HEAD
           <div className='mt-[100px]'>
             {/* Section Container */}
             <div className='global-container'>
@@ -149,9 +148,6 @@ const Footer = () => {
             </div>
             {/* Section Container */}
           </div>
-=======
-
->>>>>>> 29a35276f87bef3ee3e7f10fc8f26fa20410f519
           {/* Footer Center */}
           {/* Footer Separator */}
           <div className='global-container'>
