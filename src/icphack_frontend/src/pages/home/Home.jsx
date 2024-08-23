@@ -6,7 +6,6 @@ import Content_02 from '../../components/sections/landing-page/Content_02';
 import Service from '../../components/sections/landing-page/Service';
 import Slider from '../../components/sections/landing-page/Slider';
 import Hero from '../../components/sections/landing-page/Hero';
-import Content_03 from '../../components/sections/landing-page/Content_03';
 import Content_04 from '../../components/sections/landing-page/Content_04';
 import Faq from '../../components/sections/landing-page/Faq';
 import Testimonial from '../../components/sections/landing-page/Testimonial';
@@ -40,10 +39,10 @@ const Home = () => {
           <div className='global-container overflow-hidden'>
             <div className='h-[1px] w-full bg-[#363636]' />
           </div>
-          <Service />
+          {/* <Service /> */}
           <Slider />
           <Content_04 />
-          <Pricing_Section></Pricing_Section>
+          <Pricing_Section />
           <div className='global-container overflow-hidden'>
             <div className='h-[1px] w-full bg-[#363636]' />
           </div>
