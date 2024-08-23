@@ -1,16 +1,47 @@
 import { Link } from 'react-router-dom';
 
 import { AuthClient } from '@dfinity/auth-client';
+import { useEffect, useState } from 'react';
 
 const Cta = () => {
+  const [identityProviderUrl, setIdentityProviderUrl] = useState('');
+
+  useEffect(() => {
+    const getIdentityProviderUrl = () => {
+      const iiCanisterId = process.env.CANISTER_ID_INTERNET_IDENTITY;
+      const dfxNetwork = process.env.DFX_NETWORK;
+      
+      if (!iiCanisterId) {
+        console.error('II_CANISTER_ID environment variable is not set');
+        return '';
+      }
+
+      switch (dfxNetwork) {
+        case 'local':
+          return `http://${iiCanisterId}.localhost:4943/`
+        case 'ic':
+          return `https://identity.internetcomputer.org/`;
+        default:
+          return `https://${iiCanisterId}.dfinity.network`;
+      }
+    };
+
+    setIdentityProviderUrl(getIdentityProviderUrl());
+  }, []);
+
   const actionLogin = function(authClient) {
     return new Promise((resolve, reject) => {
+      if (!identityProviderUrl) {
+        reject(new Error('Identity provider URL is not set'));
+        return;
+      }
       authClient.login({
-        identityProvider: "http://a4tbr-q4aaa-aaaaa-qaafq-cai.localhost:4943/",
+        identityProvider: identityProviderUrl,
         onSuccess: resolve,
         onError: reject
-      })
-    })
+      });
+    });
+
   }
   
   async function login() {

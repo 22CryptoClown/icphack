@@ -53,9 +53,7 @@ const Home = ({
           <div className='global-container overflow-hidden'>
             <div className='h-[1px] w-full bg-[#363636]' />
           </div>
-          <Service />
           <Slider />
-          <Content_03 />
           <Content_04 />
           <div className='global-container overflow-hidden'>
             <div className='h-[1px] w-full bg-[#363636]' />
