@@ -4,7 +4,9 @@ const Service = () => {
   return (
     <section id='service-section'>
       {/* Section Spacer */}
-      <div className='pb-20 pt-20 xl:pb-[130px] xl:pt-[150px]'>
+
+      <div className='pb-20 xl:pb-[130px] xl:pt-[100px]'>
+
         {/* Section Container */}
         <div className='global-container'>
           {/* Section Content Block */}

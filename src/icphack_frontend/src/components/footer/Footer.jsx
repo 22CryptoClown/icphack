@@ -1,5 +1,8 @@
 import { Link } from 'react-router-dom';
 
+import logoNew from '../../assets/img/logo-threelancer-1.png';
+
+
 const Footer = () => {
   return (
     <footer id='footer-4'>
@@ -23,7 +26,12 @@ const Footer = () => {
                   <ul className='flex flex-col gap-y-[10px] capitalize'>
                     <li>
                       <Link
-                        to='/'
+
+                        onClick={()=>{
+                          const section = document.querySelector( '#home' );
+                          section.scrollIntoView( { behavior: 'smooth', block: 'start' } );
+                        }}
+
                         className='transition-all duration-300 ease-linear hover:text-colorGreen'
                       >
                         Home
@@ -31,142 +39,18 @@ const Footer = () => {
                     </li>
                     <li>
                       <Link
-                        to='/about'
-                        className='transition-all duration-300 ease-linear hover:text-colorGreen'
-                      >
-                        About Us
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to='/services'
+
+                        onClick={()=>{
+                          const section = document.querySelector( '#service' );
+                          section.scrollIntoView( { behavior: 'smooth', block: 'start' } );
+                        }}
+
                         className='transition-all duration-300 ease-linear hover:text-colorGreen'
                       >
                         Services
                       </Link>
                     </li>
-                    <li>
-                      <Link
-                        to='/pricing'
-                        className='transition-all duration-300 ease-linear hover:text-colorGreen'
-                      >
-                        Pricing
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to='/contact'
-                        className='transition-all duration-300 ease-linear hover:text-colorGreen'
-                      >
-                        Contact
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-                {/* Footer Widget */}
-                {/* Footer Widget Item */}
-                <div className='flex flex-col gap-y-6'>
-                  {/* Footer Title */}
-                  <h4 className='text-[21px] font-semibold capitalize text-white'>
-                    Utility pages
-                  </h4>
-                  {/* Footer Title */}
-                  {/* Footer Navbar */}
-                  <ul className='flex flex-col gap-y-[10px] capitalize'>
-                    <li>
-                      <Link
-                        to='/signup'
-                        className='transition-all duration-300 ease-linear hover:text-colorGreen'
-                      >
-                        Signup
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to='/login'
-                        className='transition-all duration-300 ease-linear hover:text-colorGreen'
-                      >
-                        Login
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to='/error-404'
-                        className='transition-all duration-300 ease-linear hover:text-colorGreen'
-                      >
-                        404 Not Found
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to='/reset-password'
-                        className='transition-all duration-300 ease-linear hover:text-colorGreen'
-                      >
-                        Password Reset
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-                {/* Footer Widget Item */}
-                {/* Footer Widget Item */}
-                <div className='flex flex-col gap-y-6'>
-                  {/* Footer Title */}
-                  <h4 className='text-[21px] font-semibold capitalize text-white'>
-                    Technical Resources
-                  </h4>
-                  {/* Footer Title */}
-                  {/* Footer Navbar */}
-                  <ul className='flex flex-col gap-y-[10px] capitalize'>
-                    <li>
-                      <Link
-                        rel='noopener noreferrer'
-                        target='_blank'
-                        to='www.example.com'
-                        className='transition-all duration-300 ease-linear hover:text-colorGreen'
-                      >
-                        URL Categorization
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        target='_blank'
-                        to='www.example.com'
-                        rel='noopener noreferrer'
-                        className='transition-all duration-300 ease-linear hover:text-colorGreen'
-                      >
-                        Advisories
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        rel='noopener noreferrer'
-                        target='_blank'
-                        to='www.example.com'
-                        className='transition-all duration-300 ease-linear hover:text-colorGreen'
-                      >
-                        Security Check Up
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        rel='noopener noreferrer'
-                        target='_blank'
-                        to='www.example.com'
-                        className='transition-all duration-300 ease-linear hover:text-colorGreen'
-                      >
-                        User Center
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        rel='noopener noreferrer'
-                        target='_blank'
-                        to='www.example.com'
-                        className='transition-all duration-300 ease-linear hover:text-colorGreen'
-                      >
-                        App Version
-                      </Link>
-                    </li>
+
                   </ul>
                 </div>
                 {/* Footer Widget Item */}
@@ -271,15 +155,19 @@ const Footer = () => {
               <div className='flex flex-wrap items-center justify-center gap-5 text-center md:justify-between md:text-left'>
                 <Link to='/'>
                   <img
-                    src='assets/img/treelancer.png'
-                    alt='treelancer'
+
+                    src={logoNew}
+                    alt='logo-light'
+
                     width={111}
                     height={23}
                   />
                 </Link>
                 <p>
                   © Copyright {new Date().getFullYear()}, All Rights Reserved by
-                  Mthemeus
+
+                  Threelancer
+
                 </p>
               </div>
             </div>

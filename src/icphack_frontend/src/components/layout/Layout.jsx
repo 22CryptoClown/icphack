@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom';
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
 
+
 const Layout = ({
   setShowModal,
   inputUser,
@@ -22,6 +23,7 @@ const Layout = ({
         setUser={setUser}
       />
       <Outlet />
+
       <Footer />
     </div>
   );

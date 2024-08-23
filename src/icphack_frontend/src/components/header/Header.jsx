@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { HomeOutlined, UserOutlined } from '@ant-design/icons';
@@ -60,6 +61,7 @@ const Header = ({
         onError: reject
       });
     });
+
   }
   
   async function login() {
@@ -71,6 +73,7 @@ const Header = ({
           console.log("LoginRes:", loginRes);
       
           const identity = authClient.getIdentity();
+
           let principal = identity.getPrincipal() || localStorage.getItem('principal', JSON.stringify(principal));
 
   
@@ -87,6 +90,7 @@ const Header = ({
             navigate('/dashboard');
             setIsLoggedIn(true);
             localStorage.setItem('principal', JSON.stringify(principal));
+
           } else {
             setShowModal(true);
             setActionClick("create-user");
@@ -100,6 +104,7 @@ const Header = ({
 
   const logout = async () => {
     const authClient = await AuthClient.create();
+
     await authClient.logout();
     setIsLoggedIn(false);
     setUser({ data: [], error: [] });
@@ -145,6 +150,7 @@ const Header = ({
     const isLoggedIn = await authClient.isAuthenticated();
     setIsLoggedIn(isLoggedIn);
     
+
     if (isLoggedIn) {
       const identity = authClient.getIdentity();
       let principal = identity.getPrincipal() || localStorage.getItem('principal', JSON.stringify(principal));
@@ -155,6 +161,7 @@ const Header = ({
         setUser(selfRes);
         localStorage.setItem('principal', JSON.stringify(principal));
       }
+
     }
    }
 
@@ -163,7 +170,9 @@ const Header = ({
 
   return (
     <header
+
       className={`site-header site-header--absolute is--white py-3 ${(isLoggedIn && isDashboard) && 'bg-[#000000]'}`}
+
       id='sticky-menu'
     >
       <div className='global-container'>
@@ -171,6 +180,7 @@ const Header = ({
           <Logo light={light} />
           <div></div>
           <div className='flex items-center gap-6'>
+
             {(isLoggedIn && (user.error?.length === 0 && user.data?.length !== 0)) ? (
               <Dropdown overlay={userMenu} trigger={['click']}>
                 <UserOutlined
@@ -184,11 +194,13 @@ const Header = ({
                   }}
                 />
               </Dropdown>
+
             ) : (
               <button className={loginCSS} onClick={login}>
                 Login
               </button>
             )}
+
           </div>
         </div>
       </div>
@@ -198,8 +210,11 @@ const Header = ({
         user={user}
         onUpdate={handleUserUpdate}
       />
+
     </header>
   );
 };
 
+
 export default Header;
+
