@@ -1,11 +1,75 @@
-# `icphack`
 
-Welcome to your new `icphack` project and to the Internet Computer development community. By default, creating a new project adds this README and some template files to your project directory. You can edit these template files to customize your project and to include your own code to speed up the development cycle.
+**Threelancers**
 
-To get started, you might want to explore the project directory structure and the default configuration file. Working with this project in your development environment will not affect any production deployment or identity tokens.
+---
 
-To learn more before you start working with `icphack`, see the following documentation available online:
+# Threelancers
 
+Threelancers is a pioneering platform that empowers freelancers and clients by bringing contract management on-chain. Built on the Internet Computer (ICP) blockchain, Threelancers offers secure, transparent, and immutable solutions for freelance contract management, payment processing, and project documentation. 
+
+## Table of Contents
+- [Introduction](#introduction)
+- [Key Features](#key-features)
+- [Why Blockchain?](#why-blockchain)
+- [Why ICP?](#why-icp)
+- [Pricing Tiers](#pricing-tiers)
+- [Product Roadmap](#product-roadmap)
+- [Beliefs and Impact](#beliefs-and-impact)
+- [Getting Started](#getting-started)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Introduction
+Freelancing should be empowering, not burdened with hidden costs and uncertainty. Traditional platforms often take significant cuts from your earnings, leaving freelancers with less for their hard work. Moreover, without a secure and transparent way to manage agreements, freelancers and clients face unnecessary risks and potential disputes. Threelancers addresses these challenges by leveraging blockchain technology to create a transparent, secure, and cost-effective platform for freelance contract management.
+
+## Key Features
+- **Contract Signing on Chain**: Users can upload and sign contracts securely using Internet Identity, ensuring legitimacy and transparency.
+- **Safe Payment**: Clients pay upfront, with funds securely held and released only when both parties are satisfied.
+- **Project Document on Chain**: All project-related documents are stored on-chain, providing transparency and immutability.
+
+## Why Blockchain?
+Blockchain technology enables us to build a platform where every agreement, payment, and document is secure, transparent, and immutable. This is essential for reducing the risks associated with freelance work and ensuring fair and transparent interactions between freelancers and clients.
+
+## Why ICP?
+The Internet Computer (ICP) is a fast, scalable, and cost-effective blockchain network that allows for complete on-chain storage. With storage costs as low as $5/GB per year, ICP provides the perfect environment for managing freelance contracts and documents securely and efficiently.
+
+## Pricing Tiers
+### Essential Tier (Pay as You Use)
+- Basic contract management with a single document upload.
+- Fixed price per project.
+
+### Pro Tier (Subscription-Based)
+- Multiple payment terms and document uploads.
+- Subscription-based pricing for power users.
+
+## Product Roadmap
+### Stage 1: MVP Development (Hackathon Phase)
+- Build the Minimum Viable Product (MVP) with essential features like contract creation, signing, and manual payment processing.
+- Fixed pricing for all projects.
+
+### Stage 2: Feature Finalization and Expansion
+- Implement cross-chain payment methods, introduce subscription options, and allow for multiple payment terms.
+- Finalize all project features.
+
+### Stage 3: Global Scaling and Enterprise Solutions
+- Expand globally, offering customized on-chain contract management solutions for enterprises.
+- Scale the platform to support a broader range of users.
+
+## Beliefs and Impact
+We believe that Threelancers can significantly lower costs, greatly enhance value, and drastically reduce risks for freelancers and clients. Our platform aims to reduce costs by eliminating high platform fees, add value by enhancing the freelancing experience with secure and transparent features, and reduce risks by minimizing disputes and ensuring fair payment practices.
+
+## Getting Started
+To get started with Threelancers, sign up on our platform and choose the pricing tier that best suits your needs. Begin creating, signing, and managing your freelance contracts securely on-chain.
+
+## Contributing
+We welcome contributions from the community to help us improve and expand Threelancers. Please refer to our [Contributing Guidelines](CONTRIBUTING.md) for more information on how you can get involved.
+
+## License
+Threelancers is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+
+---
+
+This `README.md` covers all the key aspects of Threelancers, providing a clear and detailed overview for potential users, contributors, and stakeholders.
 - [Quick Start](https://internetcomputer.org/docs/current/developer-docs/setup/deploy-locally)
 - [SDK Developer Tools](https://internetcomputer.org/docs/current/developer-docs/setup/install)
 - [Motoko Programming Language Guide](https://internetcomputer.org/docs/current/motoko/main/motoko)
