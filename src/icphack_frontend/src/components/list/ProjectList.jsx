@@ -3,7 +3,8 @@ import { Button, message, Table, Typography } from 'antd';
 import { icphack_backend } from 'declarations/icphack_backend';
 import { AuthClient } from '@dfinity/auth-client';
 import { uint8ArrayToUuid } from '../../utils/Uint8ArrayToUuid';
-import SubmitSupoortDocs from '../form/SubmitSuportDocs';
+import SubmitSupportDocs from '../form/SubmitSuportDocs';
+import SubmitTextToSign from '../form/SubmitTextToSign';
 
 const { Title } = Typography;
 
@@ -12,6 +13,7 @@ const ProjectsList = () => {
   const [userData, setUserData] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState(null);
+  const [actionClick, setActionClick] = useState("");
 
   const getDataProjects = async () => {
     const authClient = await AuthClient.create();
@@ -33,11 +35,18 @@ const ProjectsList = () => {
   }, []);
 
   const handleSign = async (id) => {
+    setModalVisible(true);
+    setSelectedProjectId(id);
+    setActionClick("sign");
+    localStorage.setItem("idProject", id);
+  }
+
+  const handleSignSubmit = async (id) => {
     const authClient = await AuthClient.create();
     const identity = authClient.getIdentity();
     let principal = identity.getPrincipal() || localStorage.getItem('principal', JSON.stringify(principal));
 
-    const signRes = await icphack_backend.signProject(principal, uint8ArrayToUuid(id));
+    const signRes = await icphack_backend.signProject(principal, uint8ArrayToUuid(selectedProjectId), id);
 
     if (signRes.data.length !== 0) {
       message.success(`Project has been successfully signed`);
@@ -50,28 +59,9 @@ const ProjectsList = () => {
   const handleSubmit = async (id) => {
     setModalVisible(true);
     setSelectedProjectId(id);
+    setActionClick("submit");
     localStorage.setItem("idProject", id);
   }
-
-  const handleFinalize = async () => {
-    const authClient = await AuthClient.create();
-    const identity = authClient.getIdentity();
-    let principal = identity.getPrincipal() || localStorage.getItem('principal', JSON.stringify(principal));
-
-    const finalizeContractRes = await icphack_backend.finalizeContract(principal, uint8ArrayToUuid(id));
-
-    if (finalizeContractRes.data.length !== 0) {
-      message.success(`Project has been successfully finnalized`);
-      window.location.reload();
-    } else {
-      message.error(`Project has been failed to finnalized`);
-    }
-  }
-
-  const handleModalCancel = () => {
-    setModalVisible(false);
-    setSelectedProjectId(null);
-  };
 
   const handleSupportingDocumentsSubmit = async (base64Files) => {
     const authClient = await AuthClient.create();
@@ -93,6 +83,26 @@ const ProjectsList = () => {
       message.error(`Project has been failed to submitted`);
     }
   }
+
+  const handleFinalize = async () => {
+    const authClient = await AuthClient.create();
+    const identity = authClient.getIdentity();
+    let principal = identity.getPrincipal() || localStorage.getItem('principal', JSON.stringify(principal));
+
+    const finalizeContractRes = await icphack_backend.finalizeContract(principal, uint8ArrayToUuid(id));
+
+    if (finalizeContractRes.data.length !== 0) {
+      message.success(`Project has been successfully finnalized`);
+      window.location.reload();
+    } else {
+      message.error(`Project has been failed to finnalized`);
+    }
+  }
+
+  const handleModalCancel = () => {
+    setModalVisible(false);
+    setSelectedProjectId(null);
+  };
 
   const columns = [
     {
@@ -163,11 +173,19 @@ const ProjectsList = () => {
 
   return (
     <div style={{ padding: '20px' }}>
-      <SubmitSupoortDocs
+      {actionClick === "submit" &&
+      <SubmitSupportDocs
         visible={modalVisible}
         onCancel={handleModalCancel}
         onSubmit={handleSupportingDocumentsSubmit}
-      />
+      />}
+
+      {actionClick === "sign" &&
+      <SubmitTextToSign
+        visible={modalVisible}
+        onCancel={handleModalCancel}
+        onSubmit={handleSignSubmit}
+      />}
       <Title level={2} style={{ color: '#39FF14', marginBottom: '24px' }}>Projects List</Title>
       <Table 
         columns={columns} 
