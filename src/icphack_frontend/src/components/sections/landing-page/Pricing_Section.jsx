@@ -12,13 +12,13 @@ const Pricing_Section = () => {
           {/* Section Content Block */}
           <div className='jos mb-10 text-center lg:mb-12'>
             <div className='mx-auto max-w-md lg:max-w-3xl xl:max-w-[950px]'>
-              <h2>Find a flexible plan that fits your business</h2>
+              <h2>Find our flexible pricing</h2>
             </div>
           </div>
           {/* Section Content Block */}
           {/* Pricing Block */}
           <div className='container mx-auto'>
-            {/* Tab buttons */}
+            {/* Tab buttons
             <div className='jos flex justify-center' data-jos_delay='0.3'>
               <div className='inline-flex space-x-4 rounded-[50px] border-2 border-black font-semibold'>
                 <button
@@ -40,7 +40,7 @@ const Pricing_Section = () => {
                   Annually
                 </button>
               </div>
-            </div>
+            </div> */}
             {/* Pricing Block */}
             <div className='mt-12 lg:mt-16 xl:mt-20'>
               {/* Price List */}
@@ -51,12 +51,12 @@ const Pricing_Section = () => {
                 >
                   {/* Price Item */}
                   <li
-                    className='jos group flex flex-col rounded-[10px] bg-colorLinenRuffle p-[30px] transition-all duration-300 ease-linear hover:bg-black'
+                    className='jos group flex flex-col rounded-[10px] bg-black p-[30px] transition-all duration-300 ease-linear hover:bg-green'
                     data-jos_animation='flip'
                     data-jos_delay={0}
                   >
                     <h3 className='flex flex-wrap font-dmSans text-[28px] font-bold leading-[1.28] tracking-tighter text-black transition-all duration-300 ease-linear group-hover:text-white'>
-                      Free
+                      Pay as You Use
                     </h3>
                     <span className='text-lg text-black transition-all duration-300 ease-linear group-hover:text-white'>
                       1 member

@@ -60,12 +60,6 @@ const Cta = () => {
             >
               Get Started Now
             </Link>
-            <Link
-              to='/pricing'
-              className='button inline-block h-full rounded border-2 border-black bg-colorGreen py-3 text-base text-black after:bg-black hover:text-colorGreen'
-            >
-              View Our Plans
-            </Link>
           </div>
         </div>
       </div>
