@@ -13,6 +13,15 @@ import User "user";
 import response "response";
 
 actor {
+  type CreateProjectReq = {
+    name: Text;
+    description: Text;
+    agreedFee: Nat64;
+    requiredDocuments: [Blob];
+    customerID: Text;
+    workerID: Text;
+  };
+
   type Project = {
     id: UUID.UUID;
     name: Text;
@@ -95,9 +104,9 @@ actor {
     return {data = ?newUser; error = null};
   };
 
-  public func createProject(input: Project): async response.Response<Project> {
-    let workerID = Principal.toText(input.workerID);
-    let worker = switch (Map.get(users, Map.thash, workerID)) {
+  public func createProject(input: CreateProjectReq): async response.Response<Project> {
+    let workerID = Principal.fromText(input.workerID);
+    let worker = switch (Map.get(users, Map.thash, input.workerID)) {
       case (?user) user;
       case null return {data = null; error = ?{message = "Worker ID either invalid or not found"}};
     };
@@ -106,8 +115,8 @@ actor {
       return {data = null; error = ?{message = "Worker ID either invalid or not found"}}
     };
 
-    let customerID = Principal.toText(input.customerID);
-    let customer = switch (Map.get(users, Map.thash, customerID)) {
+    let customerID = Principal.fromText(input.customerID);
+    let customer = switch (Map.get(users, Map.thash, input.customerID)) {
       case (?user) user;
       case null return {data = null; error = ?{message = "Customer ID either invalid or not found"}};
     };
@@ -116,11 +125,11 @@ actor {
       return {data = null; error = ?{message = "Customer ID either invalid or not found"}}
     };
 
-    let workerProjects = switch (Map.get(workerProjectsMap, Map.thash, workerID)) {
+    let workerProjects = switch (Map.get(workerProjectsMap, Map.thash, input.workerID)) {
       case (?projects) projects;
       case null Map.new<Text, Project>();
     };
-    let customerProjects = switch (Map.get(customerProjectsMap, Map.thash, customerID)) {
+    let customerProjects = switch (Map.get(customerProjectsMap, Map.thash, input.customerID)) {
       case (?projects) projects;
       case null Map.new<Text, Project>();
     };
@@ -136,8 +145,8 @@ actor {
       agreedFee = input.agreedFee;
       requiredDocuments = input.requiredDocuments;
       supportingDocuments = [];
-      customerID = input.customerID;
-      workerID = input.workerID;
+      customerID = customerID;
+      workerID = workerID;
       signedAt = null;
       finalizedAt = null;
     };
@@ -145,8 +154,8 @@ actor {
     Map.set(workerProjects, Map.thash, idText, project);
     Map.set(customerProjects, Map.thash, idText, project);
 
-    Map.set(workerProjectsMap, Map.thash, workerID, workerProjects);
-    Map.set(customerProjectsMap, Map.thash, customerID, customerProjects);
+    Map.set(workerProjectsMap, Map.thash, input.workerID, workerProjects);
+    Map.set(customerProjectsMap, Map.thash, input.customerID, customerProjects);
 
     Debug.print(debug_show(idText));
 
