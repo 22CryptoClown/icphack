@@ -74,14 +74,6 @@ const CreateProject = () => {
       <Form.Item name="description" label="Description" rules={[{ required: true }]}>
         <TextArea rows={4} />
       </Form.Item>
-      <Form.Item name="supportingDocuments" label="Supporting Documents">
-        <Upload
-          customRequest={({ onSuccess }) => setTimeout(() => onSuccess('ok'), 0)}
-          onChange={(info) => handleFileUpload(info, 'supportingDocuments')}
-        >
-          <Button icon={<UploadOutlined />}>Upload File</Button>
-        </Upload>
-      </Form.Item>
       <Form.Item name="customerID" label="Customer ID" rules={[{ required: true }]}>
         <Input />
       </Form.Item>
