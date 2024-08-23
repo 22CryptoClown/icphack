@@ -1,0 +1,45 @@
+[
+  {
+    "img": "assets/img/th-1/blog-main-1.jpg",
+    "category": "Business",
+    "date": "June 12, 2024",
+    "title": "10 ways to supercharge startup with AI integration",
+    "dec": "The rapid advancements in AI have paved the way for startups to revolutionize..."
+  },
+  {
+    "img": "assets/img/th-1/blog-main-2.jpg",
+    "category": "Technology",
+    "date": "June 10, 2024",
+    "title": "Testing AI tools to improve product descriptions",
+    "dec": "Amazon is currently testing generative artificial intelligence (AI) tools for..."
+  },
+  {
+    "img": "assets/img/th-1/blog-main-3.jpg",
+    "category": "Marketing",
+    "date": "June 09, 2024",
+    "title": "3 best AI businesses to make money with in 2024",
+    "dec": "Everyone is buzzing about AI and its potential to revolutionize the business..."
+  },
+  {
+    "img": "assets/img/th-1/blog-main-4.jpg",
+    "category": "Artificial Intelligence",
+    "date": "June 07, 2024",
+    "title": "Phrase gives AI-generated content for me at a glance",
+    "dec": "While this is incredibly rewarding and has sharpened my editorial skills..."
+  },
+  {
+    "img": "assets/img/th-1/blog-main-5.jpg",
+    "category": "Graphics",
+    "date": "June 05, 2024",
+    "title": "Testing out Stabilization AI's free image editing tool",
+    "dec": "Stability AI is the company that created an open-source AI image generator..."
+  },
+
+  {
+    "img": "assets/img/th-1/blog-main-6.jpg",
+    "category": "Business",
+    "date": "June 01, 2024",
+    "title": "How to started using AI-based tools as a designer",
+    "dec": "Acting on Jakob Nielsen’s stunning prediction of AI being the future..."
+  }
+]

@@ -1,0 +1,32 @@
+.ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
+  background-color: #39FF14;
+}
+
+.ant-menu-dark .ant-menu-item-selected {
+  color: #000000;
+}
+
+.ant-menu-dark .ant-menu-item-selected .anticon {
+  color: #000000;
+}
+
+.ant-menu-dark .ant-menu-item-selected:hover {
+  background-color: #32CD32;
+}
+
+.ant-menu-dark .ant-menu-item:hover {
+  background-color: #32CD32;
+}
+
+.ant-menu-dark .ant-menu-submenu-title:hover {
+  color: #39FF14;
+}
+
+.ant-layout-sider-trigger {
+  background-color: #39FF14 !important;
+  color: #000000 !important;
+}
+
+.ant-layout-sider-trigger:hover {
+  background-color: #32CD32 !important;
+}

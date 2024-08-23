@@ -1,0 +1,32 @@
+[
+  {
+    "title": "Natural language processing models to extract insights",
+    "img": "assets/img/th-1/portfolio-img-1.jpg",
+    "link": "/portfolio-details"
+  },
+  {
+    "title": "Create an modern AI-powered educational platform",
+    "img": "assets/img/th-1/portfolio-img-2.jpg",
+    "link": "/portfolio-details"
+  },
+  {
+    "title": "Develop a content generation system that uses AI system",
+    "img": "assets/img/th-1/portfolio-img-3.jpg",
+    "link": "/portfolio-details"
+  },
+  {
+    "title": "Implement a predictive maintenance system with AI",
+    "img": "assets/img/th-1/portfolio-img-4.jpg",
+    "link": "/portfolio-details"
+  },
+  {
+    "title": "Build an AI solution for precision agriculture",
+    "img": "assets/img/th-1/portfolio-img-5.jpg",
+    "link": "/portfolio-details"
+  },
+  {
+    "title": "AI for large corporations and businesses across industries",
+    "img": "assets/img/th-1/portfolio-img-6.jpg",
+    "link": "/portfolio-details"
+  }
+]
