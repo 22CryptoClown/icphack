@@ -39,7 +39,7 @@ const Header = ({
         case 'local':
           return `http://${iiCanisterId}.localhost:4943/`
         case 'ic':
-          return `https://${iiCanisterId}.ic0.app`;
+          return `https://identity.internetcomputer.org/`;
         default:
           return `https://${iiCanisterId}.dfinity.network`;
       }
