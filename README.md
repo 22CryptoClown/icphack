@@ -1,5 +1,4 @@
 
-
 **Threelancers**
 
 ---
@@ -12,35 +11,17 @@ Threelancers is a pioneering platform that empowers freelancers and clients by b
 Fully on-chain DApps
 
 ## Team Participants
-### Farrel Najib Anshary
-  
-  Github: https://github.com/farrelnajib
-  
-  Discord: arelta
+    1. @AretaBW | Discord: arethalous_
+    2. @FarrelNajib | Discord: arelta
+    3. @sammyjason39 | Discord: sammy_jason
+    4. @hubertushans88 | Discord: hubertus.hans
+    5. @julianaliwardana | Discord: maverick.30
 
-### Areta Butsainah Widad
+## Mainnet canister link: 
+`https://oc4ax-2iaaa-aaaag-all3q-cai.icp0.io/`
 
-  Github: https://github.com/AretaBW
-  
-  Discord: arethalous_
-
-### Hubertus Hans
-
-  Github: https://github.com/hubertushans88 
-  
-  Discord: hubertus.hans
-
-### Samuel Jason
-
-  Github: https://github.com/sammyjason39
-
-  Discord: sammy_jason
-
-### Julian Alifirman Wardana
-
-  Github: https://github.com/julianaliwardana
-  
-  Discord: maverick.30
+## Oisy wallet principal: 
+`aknl3-z4fvz-htz2t-il2qz-u5oe2-ck7bv-b54zs-wywnp-oxpoz-77rki-nae`
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -52,8 +33,9 @@ Fully on-chain DApps
 - [Beliefs and Impact](#beliefs-and-impact)
 - [Getting Started](#getting-started)
 - [Run the App Locally](#run-the-app-locally)
-- [Contributing](#contributing)
-- [License](#license)
+- [What We Have Learned](#what-we-have-learned)
+- [Challenges](#challenges)
+- [What We Proud of](#what-we-proud-of)
 
 ## Introduction
 Freelancing should be empowering, not burdened with hidden costs and uncertainty. Traditional platforms often take significant cuts from your earnings, leaving freelancers with less for their hard work. Moreover, without a secure and transparent way to manage agreements, freelancers and clients face unnecessary risks and potential disputes. Threelancers addresses these challenges by leveraging blockchain technology to create a transparent, secure, and cost-effective platform for freelance contract management.
@@ -141,3 +123,17 @@ To get started with Threelancers, sign up on our platform and choose the pricing
   # Deploys your canisters to the replica and generates your candid interface
   dfx deploy
   ```
+
+## What We Have Learned
+1. Building a completely on chain application
+2. Blockchain and it's authentication
+3. On-chain storage and how to utilize it
+4. Be creative to achieve our goal with the limitation of the system
+
+## Challenges
+1. Using a whole new environment for us which have no prior web 3 development experience
+2. Configuring the blockchain it self
+3. Time constraints
+
+## What We Proud of
+Complete the challenge on time
