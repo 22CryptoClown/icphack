@@ -1,6 +1,44 @@
 import { Link } from 'react-router-dom';
+import { AuthClient } from '@dfinity/auth-client';
 
 const Content_01 = () => {
+
+  const actionLogin = function(authClient) {
+    return new Promise((resolve, reject) => {
+      authClient.login({
+        identityProvider: "http://a4tbr-q4aaa-aaaaa-qaafq-cai.localhost:4943/",
+        onSuccess: resolve,
+        onError: reject
+      })
+    })
+  }
+  
+  async function login() {
+    const authClient = await AuthClient.create();
+
+    try {
+      actionLogin(authClient)
+        .then(async loginRes => {
+          console.log("LoginRes:", loginRes);
+      
+          const identity = authClient.getIdentity();
+          const principal = identity.getPrincipal();
+  
+          const selfRes = await icphack_backend.self(principal);
+
+          if (!selfRes?.error) {
+            await icphack_backend.login(principal);
+          } else {
+            setShowModal(true);
+            setActionClick("create-user");
+          }
+        })
+        .catch(err => console.log(err));
+    } catch(err) {
+      console.log("Failed to login:", err)
+    }
+  }
+
   return (
     <section id='section-content-1'>
       {/* Section Spacer */}
@@ -36,7 +74,8 @@ const Content_01 = () => {
                 </p> */}
                 <Link
                   rel='noopener noreferrer'
-                  to='/'
+                  // to='/'
+                  onClick={login}
                   className='button inline-block h-full rounded border-none bg-colorGreen py-3 text-base text-black after:border-none after:bg-white'
                 >
                   Try our solutions

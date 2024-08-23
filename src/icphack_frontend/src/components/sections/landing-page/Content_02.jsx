@@ -1,6 +1,6 @@
 const Content_02 = () => {
   return (
-    <section id='section-content-2'>
+    <section id='service'>
       {/* Section Spacer */}
       <div className='py-20 xl:py-[130px]'>
         {/* Section Container */}
