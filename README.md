@@ -1,9 +1,9 @@
 
-**Threelancers**
+**Threelancer**
 
 ---
 
-# Threelancers
+# Threelancer
 
 Threelancers is a pioneering platform that empowers freelancers and clients by bringing contract management on-chain. Built on the Internet Computer (ICP) blockchain, Threelancers offers secure, transparent, and immutable solutions for freelance contract management, payment processing, and project documentation. 
 
