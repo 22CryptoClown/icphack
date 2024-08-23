@@ -28,6 +28,7 @@ actor {
     agreedFee: Nat64;
     requiredDocuments: [Text];
     supportingDocuments: [Text];
+    txID: ?Text;
     customerID: Principal;
     workerID: Principal;
     signedAt: ?Time.Time;
@@ -148,6 +149,7 @@ actor {
       workerID = workerID;
       signedAt = null;
       finalizedAt = null;
+      txID = null;
     };
 
     Map.set(workerProjects, Map.thash, idText, project);
@@ -184,7 +186,7 @@ actor {
     return {data = ?projectsArr; error = null};
   };
 
-  public func signProject(principal: Principal, projectID: Text): async response.Response<Project> {
+  public func signProject(principal: Principal, projectID: Text, txID: Text): async response.Response<Project> {
     let principalText = Principal.toText(principal);
     let user: User = switch (Map.get(users, Map.thash, principalText)) {
       case (?user) user;
@@ -220,6 +222,7 @@ actor {
       workerID = existingProject.workerID;
       signedAt = ?Time.now();
       finalizedAt = existingProject.finalizedAt;
+      txID = ?txID;
     };
 
     let customerIDText = Principal.toText(existingProject.customerID);
@@ -269,6 +272,7 @@ actor {
       workerID = existingProject.workerID;
       signedAt = existingProject.signedAt;
       finalizedAt = existingProject.finalizedAt;
+      txID = existingProject.txID;
     };
 
     let customerIDText = Principal.toText(existingProject.customerID);
@@ -322,6 +326,7 @@ actor {
       workerID = existingProject.workerID;
       signedAt = existingProject.signedAt;
       finalizedAt = ?Time.now();
+      txID = existingProject.txID;
     };
 
     let customerIDText = Principal.toText(existingProject.customerID);
